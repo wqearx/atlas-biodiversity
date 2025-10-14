@@ -1,0 +1,494 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  scroll-behavior: smooth;
+  background: #000;
+  font-family: "Open Sans", sans-serif;
+}
+
+/* Модалка */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(100, 100, 100, 0.5); /* серый полупрозрачный фон */
+  backdrop-filter: blur(6px); /* лёгкое размытие заднего фона */
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  background-color: rgba(200, 200, 200, 0.95); /* чуть светлее, для контраста */
+  padding: 25px;
+  border-radius: 15px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80%;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4); /* мягкое свечение */
+}
+
+.modal-content h2 {
+  margin-top: 0;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #333;
+}
+
+.close:hover {
+  color: #000;
+}
+
+
+
+/*  Главная сцена */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+  overflow: hidden;
+}
+
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.title {
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+  font-size: 3.5rem;
+  color: #f5f5f5;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 25px 60px;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 20px;
+  box-shadow:
+    0 0 20px rgba(0, 0, 0, 0.6),
+    inset 0 0 8px rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(4px);
+  transition: all 0.4s ease;
+  
+}
+
+.title:hover {
+  transform: scale(1.02);
+  box-shadow:
+    0 0 25px rgba(0, 0, 0, 0.7),
+    inset 0 0 10px rgba(255, 255, 255, 0.15);
+}
+
+
+@keyframes glow {
+  from { text-shadow: 0 0 10px #8fff8f, 0 0 30px #00ff55; }
+  to { text-shadow: 0 0 30px #a0ffa0, 0 0 60px #1aff1a; }
+}
+
+.buttons {
+  margin-top: 40px;
+  display: flex;
+  gap: 25px;
+  justify-content: center;
+  flex-wrap: wrap;
+  text-decoration: none;
+}
+
+
+.btn {
+  background: rgba(0, 0, 0, 0.45);
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  padding: 18px 40px;       /* увеличили внутренние отступы */
+  color: #f5f5f5;
+  font-size: 1.3rem;        /* увеличили размер текста */
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.5px;
+  border-radius: 20px;      /* чуть более округлые углы */
+  cursor: pointer;
+  transition: all 0.4s ease;
+  text-decoration: none;
+  backdrop-filter: blur(4px);
+  box-shadow:
+    0 0 14px rgba(0, 0, 0, 0.5),
+    inset 0 0 6px rgba(255, 255, 255, 0.08);
+}
+
+.btn:hover {
+  transform: scale(1.08);   /* немного большее увеличение при наведении */
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow:
+    0 0 20px rgba(255, 255, 255, 0.15),
+    inset 0 0 12px rgba(255, 255, 255, 0.12);
+}
+
+
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  text-align: center;
+  color: #fff;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.arrow {
+  width: 20px;
+  height: 20px;
+  border-left: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotate(-45deg);
+  margin: 10px auto 0;
+  animation: bounce 1.5s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0) rotate(-45deg); }
+  50% { transform: translateY(8px) rotate(-45deg); }
+}
+
+/* 🦁 Раздел животных */
+.animals {
+  background: linear-gradient(to bottom, #022a0f, #094d25, #1b753a);
+  color: #fff;
+  padding: 80px 10%;
+  text-align: center;
+}
+
+.animals h2 {
+  font-family: 'Cinzel Decorative', cursive;
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  text-shadow: 0 0 15px #00ff55;
+}
+
+.animal-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.animal-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  overflow: hidden;
+  width: 280px;
+  transition: transform 0.3s ease;
+  box-shadow: 0 0 20px rgba(0, 255, 128, 0.2);
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.7s ease-out;
+}
+
+.animal-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.animal-card:hover {
+  transform: translateY(-8px) scale(1.05);
+}
+
+.animal-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.animal-card h3 {
+  font-family: 'Cinzel Decorative', cursive;
+  margin: 15px 0 5px;
+  font-size: 1.5rem;
+}
+
+.animal-card p {
+  font-size: 0.95rem;
+  padding: 0 15px 20px;
+  color: #e3ffe3;
+}
+
+/* 🌊 Океан */
+.ocean {
+  background: linear-gradient(to bottom, #00556e, #002e4d, #001933);
+  color: #d9f9ff;
+  padding: 80px 10%;
+  text-align: center;
+}
+
+.ocean h2 {
+  font-family: 'Cinzel Decorative', cursive;
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  text-shadow: 0 0 15px #00cfff;
+}
+
+.ocean .animal-card {
+  border: 1px solid rgba(0, 200, 255, 0.4);
+  box-shadow: 0 0 20px rgba(0, 200, 255, 0.2);
+}
+
+.ocean .animal-card:hover {
+  box-shadow: 0 0 25px rgba(0, 200, 255, 0.4);
+}
+
+/* ☁️ Птицы и небо */
+.sky {
+  background: linear-gradient(to bottom, #87ceeb, #4da6ff, #003d66);
+  color: #fff;
+  padding: 80px 10%;
+  text-align: center;
+}
+
+.sky h2 {
+  font-family: 'Cinzel Decorative', cursive;
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  text-shadow: 0 0 15px #ffffff;
+}
+
+.sky .animal-card {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.sky .animal-card:hover {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+}
+
+.sky .animal-card p {
+  color: #f0f8ff;
+}
+
+/* 🐍 Мир рептилий и пустынь */
+.desert {
+  background: linear-gradient(to bottom, #f5c679, #e6a350, #b46f2b, #6e3f15);
+  color: #fff8e1;
+  padding: 80px 10%;
+  text-align: center;
+}
+
+.desert h2 {
+  font-family: 'Cinzel Decorative', cursive;
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  text-shadow: 0 0 15px #ffd580, 0 0 30px #ffb84d;
+}
+
+.desert .animal-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 200, 120, 0.3);
+  box-shadow: 0 0 20px rgba(255, 150, 0, 0.2);
+  transition: all 0.4s ease;
+}
+
+.desert .animal-card:hover {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 0 25px rgba(255, 200, 100, 0.4);
+}
+
+.desert .animal-card h3 {
+  color: #fff3c6;
+}
+
+.desert .animal-card p {
+  color: #fff4da;
+}
+
+
+.close {
+  color: #fff;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #ffdd57;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(-20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+.site-footer {
+  margin-top: auto;
+  background: #0d1f0a;
+  color: #cfdacf;
+  text-align: center;
+  padding: 20px 0;
+  font-size: 0.95rem;
+  border-top: 2px solid rgba(144, 238, 144, 0.3);
+  box-shadow: 0 -2px 10px rgba(0, 255, 128, 0.1);
+}
+/* 🌿 Шапка сайта */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(5, 20, 10, 0.75);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 60px;
+  z-index: 100;
+  border-bottom: 1px solid rgba(200, 201, 200, 0.3);
+  box-shadow: 0 2px 15px rgba(138, 156, 147, 0.1);
+}
+
+/* Логотип и текст */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand .logo {
+  width: 38px;
+  height: 38px;
+  filter: drop-shadow(0 0 6px #f9fff9);
+}
+
+.brand span {
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+  font-size: 1.4rem;
+  color: #c9d3c9;
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px #8b978f, 0 0 20px #d9e9e0;
+}
+
+/* Меню */
+.nav-links {
+  display: flex;
+  gap: 25px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #adbbad;
+  font-size: 1rem;
+  font-family: "Open Sans", sans-serif;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: #c4cac4;
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.nav-links a:hover {
+  color: #c9d3c9;
+}
+
+/* Отступ для контента (чтобы не прилипал под шапку) */
+body {
+  padding-top: 70px;
+}
+/* 🌿 Анимация логотипа дерева */
+.brand .logo {
+  width: 42px;
+  height: 42px;
+  filter: drop-shadow(0 0 8px #838683) brightness(1.2);
+  animation: treeGlow 4s ease-in-out infinite alternate;
+}
+
+@keyframes treeGlow {
+  0% {
+    filter: drop-shadow(0 0 5px #b1b8b3) brightness(1.1);
+    transform: scale(1);
+  }
+  100% {
+    filter: drop-shadow(0 0 18px #939e96) brightness(1.4);
+    transform: scale(1.05);
+  }
+}
+
+/* 🎓 Название — более академичный и строгий стиль */
+.brand span {
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+  font-size: 1.4rem;
+  color: #e9ffe9;
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px #e3ece7, 0 0 20px #87948d;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.brand span:hover {
+  color: #dfebe2;
+  text-shadow: 0 0 15px #cddacd, 0 0 25px #7a8a80;
+}
+
+
+
+.modal-content img {
+  max-width: 100%;
+  height: auto;
+  margin: 10px 0;
+}
+
+.modal .close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 28px;
+  cursor: pointer;
+}
+

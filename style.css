@@ -492,3 +492,28 @@ body {
   cursor: pointer;
 }
 
+/* сетка для animal-container */
+.animals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  padding: 30px 10%;
+  align-items: start;
+  background: transparent;
+}
+.db-controls {
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  padding: 20px 10%;
+  align-items:center;
+}
+.db-controls select, .db-controls input {
+  padding:10px 14px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.45);
+  color:#fff;
+  min-width:180px;
+}
+

@@ -26,16 +26,7 @@
 
 </header>
 
-<div class="filter-container">
-  <select id="biome-select">
-    <option value="all">Все биомы</option>
-    <option value="forest">Лес и саванна</option>
-    <option value="ocean">Океан</option>
-    <option value="sky">Небо</option>
-    <option value="desert">Пустыня</option>
-  </select>
-  <input type="text" id="search-input" placeholder="Поиск по имени...">
-</div>
+
 
 <div id="animal-container" class="animals-grid"></div>
 
@@ -43,6 +34,26 @@
 
   <!-- Главный экран -->
   <div class="hero">
+
+    <!-- Фильтр / Поиск / Таблица (вставить сразу после .hero) -->
+<section class="db-section" id="db">
+  <div class="db-controls">
+    <select id="biome-select">
+      <option value="all">Все биомы</option>
+      <option value="forest">Лес / Саванна</option>
+      <option value="ocean">Океан</option>
+      <option value="sky">Небо</option>
+      <option value="desert">Пустыня</option>
+    </select>
+
+    <input id="search-input" type="text" placeholder="Поиск по имени (буквы)...">
+  </div>
+
+  <div id="animal-container" class="animals-grid">
+    <!-- сюда скрипт вставит карточки / таблицу -->
+  </div>
+</section>
+
     <canvas id="fireflies"></canvas>
     
 

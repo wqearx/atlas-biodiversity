@@ -1,3 +1,14 @@
+let animalsData = [];
+
+// Загружаем JSON с животными
+fetch('animals.json')
+  .then(response => response.json())
+  .then(data => {
+    animalsData = data;
+    displayAnimals(animalsData); // Отобразим всех при загрузке
+  })
+  .catch(error => console.error('Ошибка загрузки JSON:', error));
+
 // === Интерактивный многослойный туман 🌫 ===
 const canvas = document.getElementById('fireflies');
 const ctx = canvas.getContext('2d');
@@ -135,6 +146,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalImage = document.getElementById("modal-image");
   const modalDesc = document.getElementById("modal-description");
   const closeBtn = modal.querySelector(".close");
+  const animalsData = [
+  { name: "Лев", biome: "forest", img: "images/1-315.jpg", description: "Царь саванны и символ силы." },
+  { name: "Слон", biome: "forest", img: "images/elephant_03.jpg", description: "Самое крупное сухопутное животное." },
+  { name: "Тигр", biome: "forest", img: "images/istockphoto-1420676204-612x612.jpg", description: "Мощный хищник из джунглей Азии." },
+  { name: "Дельфин", biome: "ocean", img: "images/150218144801_dolphines_happy_624x351_thinkstock.jpg", description: "Дружелюбный и умный обитатель морей." },
+  { name: "Черепаха", biome: "ocean", img: "images/Images_SW_illustration_16.jpg", description: "Спокойное создание, путешествующее по океанам." },
+  { name: "Орел", biome: "sky", img: "images/golden-eagle-flying.jpg", description: "Гордый хищник, парящий над горами." },
+  { name: "Попугай", biome: "sky", img: "images/1621053325_30-oir_mobi-p-popugai-arlekin-zhivotnie-krasivo-foto-31.jpg", description: "Яркий болтун тропических лесов." },
+  { name: "Кобра", biome: "desert", img: "images/d4fef1c857d595ebe6ce86fa0d93497f.jpg", description: "Опасная и грациозная охотница, символ силы и мудрости." },
+  { name: "Игуана", biome: "desert", img: "images/794tflkt5qs3fno25ck9n91un17v5t7r.jpg", description: "Безмятежная ящерица, обожающая солнечные лучи." }
+];
+
 
   // расширенные описания для животных
   const animalDetails = {
@@ -182,28 +205,175 @@ document.addEventListener("DOMContentLoaded", () => {
   };
  
 
-  // открытие при клике на карточку
-  document.querySelectorAll(".animal-card").forEach(card => {
-    card.addEventListener("click", () => {
-      const animalName = card.querySelector("h3").textContent;
-      
-      const title = card.querySelector("h3").textContent;
-      const img = card.querySelector("img").src;
-      const desc = animalDetails[title] || card.querySelector("p").textContent;
+   // Клик по карточке
+  document.querySelectorAll('.animal-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const title = card.querySelector('h3').innerText;
+      const imgSrc = card.querySelector('img').src;
+      const desc = animalDetails[title] || card.querySelector('p').innerText;
 
       modalTitle.textContent = title;
-      modalImage.src = img;
+      modalImage.src = imgSrc;
       modalImage.alt = title;
       modalDesc.textContent = desc;
 
-      modal.style.display = "flex";
+      modal.style.display = 'flex';
     });
   });
 
-  // закрытие модалки
-  closeBtn.addEventListener("click", () => modal.style.display = "none");
+  // Закрытие модалки
+  closeBtn.addEventListener('click', () => modal.style.display = 'none');
+  window.addEventListener('click', e => { if(e.target === modal) modal.style.display = 'none'; });
+});
 
-  window.addEventListener("click", e => {
-    if (e.target === modal) modal.style.display = "none";
+function displayAnimals(list, containerId) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
+  
+  list.forEach(animal => {
+    const card = document.createElement('div');
+    card.className = 'animal-card';
+    card.innerHTML = `
+      <img src="${animal.img}" alt="${animal.name}">
+      <h3>${animal.name}</h3>
+      <p>${animal.description}</p>
+    `;
+    container.appendChild(card);
+
+    // Клик по карточке для модалки
+    card.addEventListener('click', () => {
+      modalTitle.textContent = animal.name;
+      modalImage.src = animal.img;
+      modalImage.alt = animal.name;
+      modalDesc.textContent = animalDetails[animal.name] || animal.description;
+      modal.style.display = 'flex';
+    });
   });
+
+  // Добавляем IntersectionObserver для плавного появления
+  document.querySelectorAll(`#${containerId} .animal-card`).forEach(card => observer.observe(card));
+}
+const biomeSelect = document.getElementById('biome-select');
+
+biomeSelect.addEventListener('change', () => {
+  const biome = biomeSelect.value;
+  if (biome === 'all') {
+    displayAnimals(animalsData, 'forest'); // Здесь можно делать несколько контейнеров, если нужно
+  } else {
+    const filtered = animalsData.filter(a => a.biome === biome);
+    displayAnimals(filtered, 'forest'); // Меняем контейнер по нужной секции
+  }
+});
+
+
+
+
+
+
+// ждём загрузки DOM, чтобы все элементы были доступны
+document.addEventListener('DOMContentLoaded', () => {
+
+  // ---------- элементы UI ----------
+  const container = document.getElementById('animal-container');
+  const selectBiome = document.getElementById('biome-select');
+  const searchInput = document.getElementById('search-input');
+
+  // модалка (использует твои существующие элементы)
+  const modal = document.getElementById('modal');
+  const modalTitle = document.getElementById('modal-title');
+  const modalImage = document.getElementById('modal-image');
+  const modalDesc = document.getElementById('modal-description');
+  const closeBtn = modal ? modal.querySelector('.close') : null;
+
+  let animalsData = []; // сюда загрузим JSON
+
+  // ---------- загрузка JSON ----------
+  fetch('animals.json')
+    .then(res => {
+      if (!res.ok) throw new Error('Не удалось загрузить animals.json — проверь путь и наличие файла');
+      return res.json();
+    })
+    .then(data => {
+      animalsData = data;
+      renderAnimals(animalsData);
+    })
+    .catch(err => {
+      console.error(err);
+      container.innerHTML = `<p style="color: #fff">Ошибка загрузки данных: ${err.message}</p>`;
+    });
+
+  // ---------- рендер карточек ----------
+  function renderAnimals(list) {
+    container.innerHTML = ''; // очистка
+    if (!list.length) {
+      container.innerHTML = `<p style="color:#ddd">Ничего не найдено.</p>`;
+      return;
+    }
+
+    list.forEach(animal => {
+      const card = document.createElement('div');
+      card.className = 'animal-card';
+      card.innerHTML = `
+        <img src="${animal.img}" alt="${escapeHtml(animal.name)}">
+        <h3>${escapeHtml(animal.name)}</h3>
+        <p>${escapeHtml(animal.description)}</p>
+      `;
+
+      // клик открывает модалку с расширенной инфой (оставляем простую, можно расширить)
+      card.addEventListener('click', () => {
+        if (!modal) return;
+        modalTitle.textContent = animal.name;
+        modalImage.src = animal.img;
+        modalImage.alt = animal.name;
+        modalDesc.textContent = animal.description;
+        modal.style.display = 'flex';
+      });
+
+      container.appendChild(card);
+    });
+  }
+
+  // ---------- фильтрация + поиск (одновременно) ----------
+  function applyFilters() {
+    const biome = (selectBiome?.value || 'all').toLowerCase();
+    const q = (searchInput?.value || '').trim().toLowerCase();
+
+    let filtered = animalsData;
+
+    if (biome !== 'all') {
+      filtered = filtered.filter(a => (a.biome || '').toLowerCase() === biome);
+    }
+    if (q.length) {
+      filtered = filtered.filter(a => (a.name || '').toLowerCase().includes(q));
+    }
+
+    renderAnimals(filtered);
+  }
+
+  // слушатели
+  if (selectBiome) selectBiome.addEventListener('change', applyFilters);
+  if (searchInput) {
+    // простая оптимизация — debounce, чтобы поиск не вызывался слишком часто при вводе
+    let timer = null;
+    searchInput.addEventListener('input', () => {
+      clearTimeout(timer);
+      timer = setTimeout(applyFilters, 150);
+    });
+  }
+
+  // модалка — закрытие
+  if (closeBtn) closeBtn.addEventListener('click', () => modal.style.display = 'none');
+  window.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
+
+  // защита от XSS (очень простая)
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
 });

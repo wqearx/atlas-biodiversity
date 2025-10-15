@@ -23,12 +23,28 @@
     <a href="contacts.html">Контакты</a>
     <a href="login.html">Вход/Регистрация</a>
   </nav>
+
 </header>
+
+<div class="filter-container">
+  <select id="biome-select">
+    <option value="all">Все биомы</option>
+    <option value="forest">Лес и саванна</option>
+    <option value="ocean">Океан</option>
+    <option value="sky">Небо</option>
+    <option value="desert">Пустыня</option>
+  </select>
+  <input type="text" id="search-input" placeholder="Поиск по имени...">
+</div>
+
+<div id="animal-container" class="animals-grid"></div>
+
 
 
   <!-- Главный экран -->
   <div class="hero">
     <canvas id="fireflies"></canvas>
+    
 
     <div class="overlay">
       <h1 class="title">Атлас биоразнообразия</h1>
@@ -202,10 +218,8 @@
       </div>
     </div>
   </section>
+  
 
-
- 
- 
 
   <!-- Футер -->
   <footer class="site-footer">

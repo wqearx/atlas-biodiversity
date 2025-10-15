@@ -11,6 +11,21 @@
 
   <!-- Хедер -->
 <header class="site-header">
+  <!-- 🔍 Фильтр и поиск -->
+<section class="db-section" id="db">
+  <div class="db-controls">
+    <select id="biome-filter">
+      <option value="all">Все биомы</option>
+      <option value="forest">Лес / Саванна</option>
+      <option value="ocean">Океан</option>
+      <option value="sky">Небо</option>
+      <option value="desert">Пустыня</option>
+    </select>
+
+    <input id="search" type="text" placeholder="Поиск по имени...">
+  </div>
+</section>
+
   <div class="brand">
     <img src="https://cdn-icons-png.flaticon.com/512/427/427735.png" alt="Лого" class="logo">
     <span>Атлас биоразнообразия</span>
@@ -38,12 +53,7 @@
     <!-- Фильтр / Поиск / Таблица (вставить сразу после .hero) -->
 <section class="db-section" id="db">
   <div class="db-controls">
-    <select id="biome-select">
-      <option value="all">Все биомы</option>
-      <option value="forest">Лес / Саванна</option>
-      <option value="ocean">Океан</option>
-      <option value="sky">Небо</option>
-      <option value="desert">Пустыня</option>
+
     </select>
 
     <input id="search-input" type="text" placeholder="Поиск по имени (буквы)...">

@@ -440,48 +440,66 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ---------- фильтрация + поиск (одновременно) ----------
-  function applyFilters() {
-    const biome = (selectBiome?.value || 'all').toLowerCase();
-    const q = (searchInput?.value || '').trim().toLowerCase();
+});
 
-    let filtered = animalsData;
 
-    if (biome !== 'all') {
-      filtered = filtered.filter(a => (a.biome || '').toLowerCase() === biome);
-    }
-    if (q.length) {
-      filtered = filtered.filter(a => (a.name || '').toLowerCase().includes(q));
-    }
+// =========================
+//  Фильтрация и поиск
+// =========================
 
-    renderAnimals(filtered);
-  }
+// Находим элементы фильтра и поиска
+const biomeFilterSelect = document.getElementById("biome-filter");
+const animalSearchInput = document.getElementById("search");
 
-  // слушатели
-  if (selectBiome) selectBiome.addEventListener('change', applyFilters);
-  if (searchInput) {
-    // простая оптимизация — debounce, чтобы поиск не вызывался слишком часто при вводе
-    let timer = null;
-    searchInput.addEventListener('input', () => {
-      clearTimeout(timer);
-      timer = setTimeout(applyFilters, 150);
+// Функция фильтрации
+function applyAnimalFilters() {
+  const biome = biomeFilterSelect.value;
+  const query = animalSearchInput.value.toLowerCase().trim();
+
+  document.querySelectorAll(".animal-card").forEach(card => {
+    const section = card.closest("section");
+    const cardBiome = section ? section.id : "";
+    const name = card.querySelector("h3")?.textContent.toLowerCase() || "";
+
+    const matchBiome = biome === "all" || biome === cardBiome;
+    const matchName = !query || name.includes(query);
+
+    card.style.display = matchBiome && matchName ? "" : "none";
+  });
+}
+
+// Слушатели событий
+if (biomeFilterSelect)
+  biomeFilterSelect.addEventListener("change", applyAnimalFilters);
+if (animalSearchInput)
+  animalSearchInput.addEventListener("input", () => {
+    clearTimeout(applyAnimalFilters.debounce);
+    applyAnimalFilters.debounce = setTimeout(applyAnimalFilters, 200);
+  });
+
+// =========================
+//  Модальные окна
+// =========================
+
+document.querySelectorAll(".animal-card").forEach(card => {
+  card.addEventListener("click", () => {
+    const modalId = card.getAttribute("data-modal");
+    const modal = document.getElementById(modalId);
+    if (modal) modal.style.display = "flex";
+  });
+});
+
+document.querySelectorAll(".modal").forEach(modal => {
+  const closeBtn = modal.querySelector(".close");
+  if (closeBtn) {
+    closeBtn.addEventListener("click", () => {
+      modal.style.display = "none";
     });
   }
 
-  // модалка — закрытие
-  if (closeBtn) closeBtn.addEventListener('click', () => modal.style.display = 'none');
-  window.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
-
-  // защита от XSS (очень простая)
-  function escapeHtml(str) {
-    if (!str) return '';
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
-  }
-
+  modal.addEventListener("click", e => {
+    if (e.target === modal) modal.style.display = "none";
+  });
 });
+
 

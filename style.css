@@ -508,12 +508,35 @@ body {
   padding: 20px 10%;
   align-items:center;
 }
-.db-controls select, .db-controls input {
-  padding:10px 14px;
-  border-radius:10px;
-  border:1px solid rgba(255,255,255,0.12);
-  background: rgba(0,0,0,0.45);
-  color:#fff;
-  min-width:180px;
+
+
+
+.db-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.db-controls select,
+.db-controls input {
+  padding: 10px 15px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  background: #ffffffcc;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.db-controls select:hover,
+.db-controls input:hover {
+  background: #fff;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
 }
 

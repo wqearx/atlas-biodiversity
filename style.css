@@ -492,51 +492,6 @@ body {
   cursor: pointer;
 }
 
-/* сетка для animal-container */
-.animals-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
-  padding: 30px 10%;
-  align-items: start;
-  background: transparent;
-}
-.db-controls {
-  display:flex;
-  gap:12px;
-  justify-content:center;
-  padding: 20px 10%;
-  align-items:center;
-}
 
 
-
-.db-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(8px);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.db-controls select,
-.db-controls input {
-  padding: 10px 15px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  background: #ffffffcc;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-}
-
-.db-controls select:hover,
-.db-controls input:hover {
-  background: #fff;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-}
 

@@ -287,10 +287,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let animalsData = []; // сюда загрузим JSON
 
-  // ---------- загрузка JSON ----------
+  
+
+  
+
+});
+
+// script.js — вставь вместо всего старого JS (удали дубли)
+document.addEventListener('DOMContentLoaded', () => {
+  const container = document.getElementById('animal-container');
+  const selectBiome = document.getElementById('biome-select');
+  const searchInput = document.getElementById('search-input');
+
+  // модалка (предполагаем, что в HTML есть секция modal)
+  const modal = document.getElementById('modal');
+  const modalTitle = document.getElementById('modal-title');
+  const modalImage = document.getElementById('modal-image');
+  const modalDesc = document.getElementById('modal-description');
+  const closeBtn = modal ? modal.querySelector('.close') : null;
+
+  let animalsData = [];
+
+  // IntersectionObserver для анимации карточек (опционально)
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.15 });
+
+  // Загрузка JSON
   fetch('animals.json')
     .then(res => {
-      if (!res.ok) throw new Error('Не удалось загрузить animals.json — проверь путь и наличие файла');
+      if (!res.ok) throw new Error('Не удалось загрузить animals.json (проверь путь и наличие файла).');
       return res.json();
     })
     .then(data => {
@@ -299,13 +327,13 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     .catch(err => {
       console.error(err);
-      container.innerHTML = `<p style="color: #fff">Ошибка загрузки данных: ${err.message}</p>`;
+      container.innerHTML = `<p style="color:#fff">Ошибка загрузки данных: ${err.message}</p>`;
     });
 
-  // ---------- рендер карточек ----------
+  // Рендер списка карточек
   function renderAnimals(list) {
-    container.innerHTML = ''; // очистка
-    if (!list.length) {
+    container.innerHTML = '';
+    if (!list || list.length === 0) {
       container.innerHTML = `<p style="color:#ddd">Ничего не найдено.</p>`;
       return;
     }
@@ -314,87 +342,29 @@ document.addEventListener('DOMContentLoaded', () => {
       const card = document.createElement('div');
       card.className = 'animal-card';
       card.innerHTML = `
-        <img src="${animal.img}" alt="${escapeHtml(animal.name)}">
-        <h3>${escapeHtml(animal.name)}</h3>
-        <p>${escapeHtml(animal.description)}</p>
+        <img src="${escapeHtml(animal.img)}" alt="${escapeHtml(animal.name)}">
+        <h3 class="animal-name">${escapeHtml(animal.name)}</h3>
+        <p>${escapeHtml(animal.description || '')}</p>
       `;
-
-      // клик открывает модалку с расширенной инфой (оставляем простую, можно расширить)
+      // клик — открываем модалку
       card.addEventListener('click', () => {
         if (!modal) return;
         modalTitle.textContent = animal.name;
         modalImage.src = animal.img;
         modalImage.alt = animal.name;
-        modalDesc.textContent = animal.description;
+        modalDesc.textContent = animal.description || '';
         modal.style.display = 'flex';
       });
 
       container.appendChild(card);
+      observer.observe(card);
     });
   }
 
-  
 
 });
 
 
-// =========================
-//  Фильтрация и поиск
-// =========================
 
-// Находим элементы фильтра и поиска
-const biomeFilterSelect = document.getElementById("biome-filter");
-const animalSearchInput = document.getElementById("search");
-
-// Функция фильтрации
-function applyAnimalFilters() {
-  const biome = biomeFilterSelect.value;
-  const query = animalSearchInput.value.toLowerCase().trim();
-
-  document.querySelectorAll(".animal-card").forEach(card => {
-    const section = card.closest("section");
-    const cardBiome = section ? section.id : "";
-    const name = card.querySelector("h3")?.textContent.toLowerCase() || "";
-
-    const matchBiome = biome === "all" || biome === cardBiome;
-    const matchName = !query || name.includes(query);
-
-    card.style.display = matchBiome && matchName ? "" : "none";
-  });
-}
-
-// Слушатели событий
-if (biomeFilterSelect)
-  biomeFilterSelect.addEventListener("change", applyAnimalFilters);
-if (animalSearchInput)
-  animalSearchInput.addEventListener("input", () => {
-    clearTimeout(applyAnimalFilters.debounce);
-    applyAnimalFilters.debounce = setTimeout(applyAnimalFilters, 200);
-  });
-
-// =========================
-//  Модальные окна
-// =========================
-
-document.querySelectorAll(".animal-card").forEach(card => {
-  card.addEventListener("click", () => {
-    const modalId = card.getAttribute("data-modal");
-    const modal = document.getElementById(modalId);
-    if (modal) modal.style.display = "flex";
-  });
-});
-
-document.querySelectorAll(".modal").forEach(modal => {
-  const closeBtn = modal.querySelector(".close");
-  if (closeBtn) {
-    closeBtn.addEventListener("click", () => {
-      modal.style.display = "none";
-    });
-  }
-
-  modal.addEventListener("click", e => {
-    if (e.target === modal) modal.style.display = "none";
-  });
-});
 
 

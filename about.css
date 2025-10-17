@@ -13,17 +13,49 @@
   background: linear-gradient(120deg, #072014 0%, #0c3a22 50%, #144e2b 100%);
   animation: gradientShift 12s ease-in-out infinite;
 }
+/* =========================ЧАСТЬ АНИМАЦИИ С ИСПОЛЬЗОВАНИЕ JS=================== */
 
-@keyframes gradientShift {
-  0%   { background-position: 0% 50%; filter: hue-rotate(0deg); }
-  50%  { background-position: 100% 50%; filter: hue-rotate(10deg) saturate(1.05); }
-  100% { background-position: 0% 50%; filter: hue-rotate(0deg); }
+/* Холст с листьями */
+#leaves {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
 }
+
+/* Контент явно выше холста */
+.content, .features, .story {
+  position: relative;
+  z-index: 2;
+}
+/* Основная компоновка */
+.leaves-bg {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: linear-gradient(120deg, #072014 0%, #0c3a22 50%, #144e2b 100%);
+  overflow: hidden;
+}
+
+
+
+.leaves-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+ 
+  z-index: 0;
+}
+
 
 /* Контейнер с содержимым */
 .content {
   max-width: 980px;
-  margin: 56px auto;
+  margin: 100px auto;
   padding: 36px;
   background: rgba(255,255,255,0.02); 
   border-radius: 14px;
@@ -41,10 +73,15 @@
 
 .content h1 {
   font-family: 'Cinzel Decorative', cursive;
-  margin-bottom: 8px;
-  font-size: 2.2rem;
-  color: #fff;
-  text-shadow: 0 0 14px rgba(160,255,160,0.12);
+  font-size: 2.6rem;
+  color: #eeeeee;
+  text-align: center;
+  text-shadow: 0 0 18px rgba(113, 133, 113, 0.25);
+  animation: titleGlow 3s ease-in-out infinite alternate;
+}
+@keyframes titleGlow {
+  0% { text-shadow: 0 0 8px rgba(144,255,144,0.2); }
+  100% { text-shadow: 0 0 24px rgba(144,255,144,0.5); }
 }
 
 .meta {
@@ -55,39 +92,79 @@
 /* Карточки */
 .features {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
-  gap: 16px;
-  margin-top: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+  gap: 18px;
+  margin-top: 24px;
 }
+
 
 .card {
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.04));
-  padding: 16px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.06));
+  padding: 18px;
   border-radius: 12px;
-  border: 1px solid rgba(144,238,144,0.06);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.36);
-  transition: transform .35s cubic-bezier(.2,.9,.3,1), box-shadow .35s;
+  border: 1px solid rgba(144,238,144,0.08);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  transform: translateY(15px);
+  opacity: 0;
+  animation: riseUp 0.8s ease forwards;
 }
-.card:hover { transform: translateY(-6px); box-shadow: 0 14px 40px rgba(0,0,0,0.5); }
+.card:nth-child(1) { animation-delay: 0.3s; }
+.card:nth-child(2) { animation-delay: 0.5s; }
+.card:nth-child(3) { animation-delay: 0.7s; }
 
+@keyframes riseUp { to { transform: translateY(0); opacity: 1; } }
+
+.card h3 { color: #aaffaa; margin-bottom: 10px; }
+.card li { margin-bottom: 6px; }
+
+/* 🌸 Анимация карточек */
+.card {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.8s ease forwards;
+}
+
+.card:nth-child(1) { animation-delay: 0.2s; }
+.card:nth-child(2) { animation-delay: 0.4s; }
+.card:nth-child(3) { animation-delay: 0.6s; }
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 🌊 Фон под карточками */
+.features {
+  position: relative;
+  z-index: 1;
+}
+
+.features::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(144,255,144,0.08), transparent 70%);
+  z-index: 0;
+}
 /* Кнопка */
+
+/* 🌿 Кнопка */
 .cta {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 12px 22px;
-  border-radius: 28px;
-  background: linear-gradient(90deg, rgba(144,238,144,0.15), rgba(80,200,110,0.18));
-  border: 2px solid rgba(144,238,144,0.28);
-  color: #022a14;
+  display: block;
+  width: fit-content;
+  margin: 36px auto 0;
+  padding: 14px 32px;
   font-weight: 700;
-  cursor: pointer;
-  transition: transform .2s ease, box-shadow .25s ease;
-  box-shadow: 0 6px 18px rgba(16,80,40,0.12);
+  color: #022a14;
+  background: linear-gradient(90deg, #64e087, #46b76d);
+  border: none;
+  border-radius: 30px;
+  box-shadow: 0 8px 25px rgba(0,255,128,0.2);
   text-decoration: none;
+  transition: all 0.3s ease;
 }
 .cta:hover {
-  transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 18px 40px rgba(16,80,40,0.28);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 35px rgba(0,255,128,0.35);
 }
 
 /* Адаптив */
@@ -97,9 +174,9 @@
 .site-footer {
   margin-top: auto;
   background: #0d1f0a;
-  color: #aaffaa;
+  color: #b4b8b4;
   text-align: center;
-  padding: 20px 0;
+
   font-size: 0.95rem;
   border-top: 2px solid rgba(144, 238, 144, 0.3);
   box-shadow: 0 -2px 10px rgba(0, 255, 128, 0.1);
@@ -112,7 +189,7 @@
 
 .nav-links a {
   text-decoration: none;
-  color: #caffca;
+  color: #cfcfcf;
   font-size: 1rem;
   font-family: "Open Sans", sans-serif;
   transition: all 0.3s ease;
@@ -126,7 +203,7 @@
   left: 0;
   width: 0%;
   height: 2px;
-  background: #8fff8f;
+  background: #727772;
   transition: width 0.3s ease;
 }
 
@@ -135,7 +212,7 @@
 }
 
 .nav-links a:hover {
-  color: #aaffaa;
+  color: #d4dfd4;
 }
 
 /* Отступ для контента (чтобы не прилипал под шапку) */
@@ -146,17 +223,17 @@ body {
 .brand .logo {
   width: 42px;
   height: 42px;
-  filter: drop-shadow(0 0 8px #aaffaa) brightness(1.2);
+  filter: drop-shadow(0 0 8px #adbbad) brightness(1.2);
   animation: treeGlow 4s ease-in-out infinite alternate;
 }
 
 @keyframes treeGlow {
   0% {
-    filter: drop-shadow(0 0 5px #5fff94) brightness(1.1);
+    filter: drop-shadow(0 0 5px #7d8881) brightness(1.1);
     transform: scale(1);
   }
   100% {
-    filter: drop-shadow(0 0 18px #b8ffcc) brightness(1.4);
+    filter: drop-shadow(0 0 18px #e0e2e1) brightness(1.4);
     transform: scale(1.05);
   }
 }
@@ -168,11 +245,62 @@ body {
   font-size: 1.4rem;
   color: #e9ffe9;
   letter-spacing: 1px;
-  text-shadow: 0 0 10px #4fff8f, 0 0 20px #00a34d;
+  text-shadow: 0 0 10px #becfc5, 0 0 20px #4a524e;
   transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
 .brand span:hover {
   color: #b8ffcc;
-  text-shadow: 0 0 15px #8fff8f, 0 0 25px #00ff66;
+  text-shadow: 0 0 15px #d8d8d8, 0 0 25px #9b9b9b;
 }
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(10, 25, 15, 0.9);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 48px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  border-bottom: 1px solid rgba(156, 170, 156, 0.25);
+}
+
+
+/* 🪶 Контент */
+.content {
+  max-width: 980px;
+  margin: 0 auto 40px;
+  padding: 36px;
+  background: rgba(255,255,255,0.02);
+  border-radius: 14px;
+  box-shadow: 0 6px 30px rgba(0,0,0,0.45);
+  animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+/* 🌱 История */
+.story {
+  margin-top: 40px;
+  background: rgba(255,255,255,0.03);
+  border-left: 4px solid rgba(144,255,144,0.3);
+  padding: 20px 26px;
+  border-radius: 12px;
+  box-shadow: 0 4px 25px rgba(0,0,0,0.3);
+  animation: fadeIn 1s ease 1s forwards;
+}
+
+.story h2 {
+  font-family: 'Cinzel', serif;
+  color: #aaffaa;
+  margin-bottom: 12px;
+}
+
+

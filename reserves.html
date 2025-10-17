@@ -6,16 +6,7 @@
   <title>Заповедники — Атлас биоразнообразия</title>
   <link rel="stylesheet" href="pages.css" />
   <link rel="stylesheet" href="style.css" />
-<h2>Привет, {{ session['user_name'] }}!</h2>
-<a href="/logout">Выйти</a>
-<ul>
-    {% for reserve in reserves %}
-        <li>
-            <strong>{{ reserve['name'] }}</strong><br>
-            {{ reserve['description'] }}
-        </li>
-    {% endfor %}
-</ul>
+
 </head>
 <body>
     <div class="leaves-bg">

@@ -1,0 +1,601 @@
+/* =================== Общие стили =================== */
+body {
+  font-family: 'Open Sans', sans-serif;
+  background: linear-gradient(135deg, #0a2a18, #0f3d27);
+  margin: 0;
+  color: #e9ffe9;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden; /* Убираем горизонтальный скролл */
+  overflow-y: auto; /* Разрешаем вертикальный скролл */
+}
+
+/* =================== Header =================== */
+header {
+  width: 100%;
+  background: linear-gradient(90deg, #0a2a18, #0f3d27);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 1rem;
+}
+
+/* Левый блок: логотип и название */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-shrink: 0;
+}
+
+.brand-name {
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+  font-size: 1.4rem;
+  color: #baffba;
+  text-shadow: 0 0 12px rgba(0,255,140,0.4);
+  flex-shrink: 0;
+}
+
+header .logo {
+  height: 40px;
+  filter: drop-shadow(0 0 5px #5fff94) brightness(1.2);
+  transition: transform 0.3s ease;
+}
+header .logo:hover {
+  transform: scale(1.05) rotate(5deg);
+}
+
+/* Ссылка «Главная» */
+.header-link {
+  color: #baffba;
+  font-weight: 600;
+  text-decoration: none;
+  margin-left: 1rem;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+.header-link:hover {
+  color: #64ffda;
+  transform: scale(1.05);
+  text-shadow: 0 0 8px #64ffda, 0 0 15px #baffba;
+}
+
+/* Профиль справа */
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+.profile-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #64ffda;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.profile-icon:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 10px #64ffda;
+}
+
+.profile-name {
+  font-weight: bold;
+  color: #baffba;
+}
+
+.profile button {
+  padding: 0.4rem 1rem;
+  border: none;
+  border-radius: 25px;
+  background: #00c853;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+.profile button:hover {
+  background: #64dd17;
+  transform: scale(1.05);
+}
+
+/* =================== Main =================== */
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow: visible; /* Разрешаем контенту выходить за пределы */
+}
+
+/* =================== Формы =================== */
+.form-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  width: 100%;
+  max-width: 900px;
+}
+
+form {
+  background: rgba(0,0,0,0.4);
+  padding: 2rem;
+  border-radius: 20px;
+  flex: 1 1 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+form:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 35px rgba(0,0,0,0.7);
+}
+
+form h1 {
+  text-align: center;
+  font-family: 'Cinzel Decorative', cursive;
+  color: #baffba;
+  margin-bottom: 1rem;
+}
+
+input[type="text"], input[type="email"], input[type="password"] {
+  padding: 0.8rem;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  background: rgba(255,255,255,0.1);
+  color: #e9ffe9;
+  font-size: 1rem;
+  transition: 0.3s ease;
+}
+input:focus {
+  background: rgba(255,255,255,0.2);
+  box-shadow: 0 0 10px #64ffda;
+}
+input::placeholder {
+  color: #b2ff59;
+}
+
+button {
+  padding: 0.8rem;
+  border-radius: 25px;
+  border: none;
+  background: #00c853;
+  font-weight: 600;
+  cursor: pointer;
+  color: #fff;
+  transition: 0.3s ease;
+}
+button:hover {
+  background: #64dd17;
+  transform: scale(1.05);
+}
+
+.save-btn {
+  background: #64ffda;
+  color: #022a14;
+  font-size: 1.1rem;
+  padding: 0.8rem 1.5rem;
+  align-self: center;
+}
+.save-btn:hover {
+  background: #52e6c9;
+}
+
+/* =================== Сообщения =================== */
+.message {
+  text-align: center;
+  font-weight: bold;
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  border-radius: 8px;
+  display: none;
+}
+
+/* =================== Заповедники =================== */
+.reserves-container {
+  margin-top: 2rem;
+  padding: 2rem;
+  border-radius: 20px;
+  background: rgba(0,0,0,0.35);
+  width: 100%;
+  max-width: 1000px;
+}
+
+.intro-text {
+  text-align: center;
+  color: #b2ffba;
+  margin-bottom: 2rem;
+}
+
+.reserves-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.reserve-card {
+  background: rgba(255,255,255,0.05);
+  padding: 1.5rem;
+  text-align: center;
+  border-radius: 16px;
+  flex: 1 1 250px;
+  max-width: 280px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.reserve-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+}
+.reserve-card img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+.reserve-card h3 {
+  color: #baffba;
+  margin: 0.5rem 0;
+}
+.reserve-card p {
+  color: #dfffe0;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+/* Кнопки донатов */
+.donation-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.donation-buttons button {
+  background: #64ffda;
+  color: #022a14;
+  border-radius: 12px;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+.donation-buttons button:hover {
+  background: #52e6c9;
+  transform: scale(1.05);
+}
+
+/* Выбранные заповедники */
+.selected-reserves {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 16px;
+  border: 1px solid #00c853;
+  background: rgba(0,200,83,0.1);
+}
+.selected-reserves h3 {
+  color: #baffba;
+  margin-top: 0;
+}
+
+/* =================== История пожертвований =================== */
+.donations-container {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border-radius: 20px;
+  background: rgba(0,0,0,0.35);
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 2rem; /* Добавляем отступ снизу */
+}
+
+.donations-container h3 {
+  color: #baffba;
+  text-align: center;
+  margin-top: 0;
+}
+
+.donations-list {
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.donation-item:last-child {
+  margin-bottom: 0;
+}
+
+.donation-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255,255,255,0.05);
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  margin-bottom: 0.5rem;
+  border-left: 4px solid #64ffda;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.donation-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 15px rgba(100,255,218,0.3);
+}
+
+.donation-amount {
+  font-weight: bold;
+  color: #64ffda;
+}
+
+/* =================== Адаптив =================== */
+@media (max-width: 800px) {
+  .form-container { 
+    flex-direction: column; 
+    align-items: center; 
+  }
+  .reserves-cards { 
+    flex-direction: column; 
+    align-items: center; 
+  }
+  .reserve-card { 
+    max-width: 100%; 
+    width: 100%;
+  }
+  header { 
+    padding: 1rem; 
+  }
+  .header-content { 
+    flex-direction: column; 
+    gap: 0.5rem; 
+  }
+  .profile { 
+    width: 100%; 
+    justify-content: center; 
+    order: -1; 
+  }
+  
+  /* Увеличиваем отступы для мобильных */
+  main {
+    padding: 1rem;
+  }
+  
+  .reserves-container,
+  .donations-container {
+    padding: 1.5rem;
+    margin-top: 1rem;
+  }
+}
+
+/* =================== Скрытые блоки по умолчанию =================== */
+#reservesContainer,
+#donationsContainer,
+#profileMenu {
+  display: none;
+}
+
+/* =================== Полосы прокрутки =================== */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.1);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: #64ffda;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #52e6c9;
+}
+
+/* Плавное появление элементов */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.donation-item {
+  animation: fadeUp 0.5s ease forwards;
+}
+
+/* =================== Общий стиль ссылок =================== */
+a {
+  color: #baffba;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.2s ease;
+}
+
+a:hover {
+  color: #64ffda;
+  text-shadow: 0 0 8px #64ffda, 0 0 15px #baffba;
+  transform: scale(1.05);
+}
+
+/* Если ссылка находится в блоке меню или хедера */
+a.nav-link {
+  padding: 0.4rem 0.8rem;
+  border-radius: 12px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+a.nav-link:hover {
+  background: rgba(100, 255, 218, 0.1);
+}
+
+/* =================== Модальные окна =================== */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 200;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.6);
+  backdrop-filter: blur(3px);
+}
+
+.modal-content {
+  background-color: rgba(0,0,0,0.85);
+  color: #eaffea;
+  margin: 10% auto;
+  padding: 30px;
+  border-radius: 20px;
+  max-width: 600px;
+  box-shadow: 0 10px 40px rgba(0,255,140,0.4);
+  position: relative;
+  animation: fadeUp 0.4s ease;
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  color: #baffba;
+}
+
+.modal-content p {
+  color: #dfffe0;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  color: #ff7979;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #ff5252;
+}
+
+/* =================== Стили для скроллируемого контента =================== */
+.scrollable-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding-bottom: 2rem; /* Добавляем отступ снизу для скролла */
+}
+
+/* Контейнер для всех карточек заповедников с скроллом */
+.reserves-scroll-container {
+  max-height: 500px;
+  overflow-y: auto;
+  width: 100%;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  border: 1px solid rgba(100, 255, 218, 0.2);
+  margin-bottom: 1rem;
+}
+
+/* Сетка для карточек внутри скроллируемого контейнера */
+.reserves-scroll-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+  padding: 0.5rem;
+}
+
+/* =================== Фон и анимации =================== */
+/* Холст с частицами */
+canvas#fireflies-login {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Основной контейнер для всего контента */
+.content-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* =================== Дополнительные адаптивные стили =================== */
+@media (max-width: 480px) {
+  .brand-name {
+    font-size: 1.2rem;
+  }
+  
+  .header-link {
+    font-size: 0.9rem;
+    margin-left: 0.5rem;
+  }
+  
+  form {
+    padding: 1.5rem;
+  }
+  
+  .reserves-scroll-container {
+    max-height: 400px;
+  }
+  
+  .reserves-scroll-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Убедимся, что body можно скроллить */
+html {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+/* Плавный скролл */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Убираем лишние отступы у списков */
+ul, ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Гарантируем, что контент не обрезается */
+.reserves-container,
+.donations-container,
+.form-container {
+  overflow: visible;
+}

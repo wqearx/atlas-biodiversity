@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Заповедники — Атлас биоразнообразия</title>
+  <link rel="stylesheet" href="../fonts/pages.css" />
+  <link rel="stylesheet" href="../fonts/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="leaves-bg">
+        <canvas id="leaves"></canvas>
+
+  <header class="site-header">
+  <div class="brand">
+    <img src="https://cdn-icons-png.flaticon.com/512/427/427735.png" alt="Лого" class="logo">
+    <span>Атлас биоразнообразия</span>
+  </div>
+
+  <nav class="nav-links">
+    <a href="index.html">Главная</a>
+    <a href="reserves.html">Заповедники</a>
+    <a href="about.html">О проекте</a>
+    <a href="contacts.html">Контакты</a>
+    <a href="login.html">Вход/Регистрация</a>
+  </nav>
+</header>
+
+  <section class="reserves">
+    <div class="reserves-header">
+      <h1>Заповедники мира</h1>
+      <p class="intro">
+        Здесь вы можете познакомиться с уникальными природными уголками планеты, 
+        где сохраняется редкая флора и фауна.
+      </p>
+      <div class="search-filter">
+        <input type="text" id="searchInput" placeholder="Поиск заповедников...">
+        <select id="regionFilter">
+          <option value="all">Все регионы</option>
+          <option value="russia">Россия</option>
+          <option value="europe">Европа</option>
+          <option value="asia">Азия</option>
+          <option value="africa">Африка</option>
+          <option value="america">Америка</option>
+          <option value="oceania">Океания</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="reserve-list">
+      <!-- Российские заповедники -->
+      <div class="reserve-card" data-region="russia">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1570481662006-a3a1374699e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+        <div class="card-content">
+          <h3>Байкальский заповедник</h3>
+          <p>Охраняет уникальную экосистему озера Байкал и его обитателей.</p>
+          <div class="card-footer">
+            <span class="location">Россия, Бурятия</span>
+            <span class="area">165 724 га</span>
+          </div>
+          <a href="login.html" class="support-btn">💚 Поддержать</a>
+        </div>
+      </div>
+      
+      <div class="reserve-card" data-region="russia">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1559666126-84d0e0a5ebf6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+        <div class="card-content">
+          <h3>Кроноцкий заповедник</h3>
+          <p>Дом вулканов, гейзеров и диких медведей Камчатки.</p>
+          <div class="card-footer">
+            <span class="location">Россия, Камчатка</span>
+            <span class="area">1 147 619 га</span>
+          </div>
+          <a href="login.html" class="support-btn">💚 Поддержать</a>
+        </div>
+      </div>
+      
+      <div class="reserve-card" data-region="russia">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1518834107812-67d4c1b65d0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+        <div class="card-content">
+          <h3>Кавказский заповедник</h3>
+          <p>Объект Всемирного наследия ЮНЕСКО с богатой флорой и фауной.</p>
+          <div class="card-footer">
+            <span class="location">Россия, Кавказ</span>
+            <span class="area">280 335 га</span>
+          </div>
+          <a href="login.html" class="support-btn">💚 Поддержать</a>
+        </div>
+      </div>
+      
+      <div class="reserve-card" data-region="russia">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+        <div class="card-content">
+          <h3>Алтайский заповедник</h3>
+          <p>Сохранение уникальных природных комплексов Горного Алтая.</p>
+          <div class="card-footer">
+            <span class="location">Россия, Алтай</span>
+            <span class="area">881 238 га</span>
+          </div>
+          <a href="login.html" class="support-btn">💚 Поддержать</a>
+        </div>
+      </div>
+
+      <!-- Европейские заповедники -->
+      <div class="reserve-card" data-region="europe">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+        <div class="card-content">
+          <h3>Швейцарский национальный парк</h3>
+          <p>Первый национальный парк в Альпах и Центральной Европе.</p>
+          <div class="card-footer">
+            <span class="location">Швейцария</span>
+            <span class="area">17 030 га</span>
+          </div>
+          <a href="login.html" class="support-btn">💚 Поддержать</a>
+        </div>
+      </div>
+      
+      <div class="reserve-card" data-region="europe">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+        <div class="card-content">
+          <h3>Беловежская пуща</h3>
+          <p>Один из последних и крупнейших остатков реликтового леса.</p>
+          <div class="card-footer">
+            <span class="location">Польша/Беларусь</span>
+            <span class="area">152 200 га</span>
+          </div>
+          <a href="login.html" class="support-btn">💚 Поддержать</a>
+        </div>
+      </div>
+
+      <!-- Азиатские заповедники -->
+      <div class="reserve-card" data-region="asia">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1547981609-4b6bf67b1293?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+        <div class="card-content">
+          <h3>Джигме-Дорджи</h3>
+          <p>Крупнейший национальный парк Бутана с богатым биоразнообразием.</p>
+          <div class="card-footer">
+            <span class="location">Бутан</span>
+            <span class="area">431 600 га</span>
+          </div>
+          <a href="login.html" class="support-btn">💚 Поддержать</a>
+        </div>
+      </div>
+      
+      <div class="reserve-card" data-region="asia">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1521334884684-d80222895322?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+        <div class="card-content">
+          <h3>Комитаке</h3>
+          <p>Заповедник с вулканическими ландшафтами в Японии.</p>
+          <div class="card-footer">
+            <span class="location">Япония</span>
+            <span class="area">24 800 га</span>
+          </div>
+          <a href="login.html" class="support-btn">💚 Поддержать</a>
+        </div>
+      </div>
+
+      <!-- Африканские заповедники -->
+      <div class="reserve-card" data-region="africa">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+        <div class="card-content">
+          <h3>Серенгети</h3>
+          <p>Знаменитый парк с ежегодной миграцией миллионов животных.</p>
+          <div class="card-footer">
+            <span class="location">Танзания</span>
+            <span class="area">1 476 300 га</span>
+          </div>
+          <a href="login.html" class="support-btn">💚 Поддержать</a>
+        </div>
+      </div>
+      
+      <div class="reserve-card" data-region="africa">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+        <div class="card-content">
+          <h3>Крюгер</h3>
+          <p>Один из крупнейших заповедников в Южной Африке.</p>
+          <div class="card-footer">
+            <span class="location">ЮАР</span>
+            <span class="area">1 948 528 га</span>
+          </div>
+          <a href="login.html" class="support-btn">💚 Поддержать</a>
+        </div>
+      </div>
+
+      <!-- Американские заповедники -->
+      <div class="reserve-card" data-region="america">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+        <div class="card-content">
+          <h3>Йеллоустон</h3>
+          <p>Первый национальный парк в мире, символ охраны природы.</p>
+          <div class="card-footer">
+            <span class="location">США</span>
+            <span class="area">898 317 га</span>
+          </div>
+          <a href="login.html" class="support-btn">💚 Поддержать</a>
+        </div>
+      </div>
+      
+      <div class="reserve-card" data-region="america">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1586015555758-d975927b2b1c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+        <div class="card-content">
+          <h3>Банф</h3>
+          <p>Старейший национальный парк Канады в Скалистых горах.</p>
+          <div class="card-footer">
+            <span class="location">Канада</span>
+            <span class="area">664 100 га</span>
+          </div>
+          <a href="login.html" class="support-btn">💚 Поддержать</a>
+        </div>
+      </div>
+
+      <!-- Океания -->
+      <div class="reserve-card" data-region="oceania">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+        <div class="card-content">
+          <h3>Фьордленд</h3>
+          <p>Крупнейший национальный парк Новой Зеландии.</p>
+          <div class="card-footer">
+            <span class="location">Новая Зеландия</span>
+            <span class="area">1 260 000 га</span>
+          </div>
+          <a href="login.html" class="support-btn">💚 Поддержать</a>
+        </div>
+      </div>
+      
+      <div class="reserve-card" data-region="oceania">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1544551763-77efc0cac906?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+        <div class="card-content">
+          <h3>Какаду</h3>
+          <p>Объект Всемирного наследия с уникальной культурой и природой.</p>
+          <div class="card-footer">
+            <span class="location">Австралия</span>
+            <span class="area">1 980 000 га</span>
+          </div>
+          <a href="login.html" class="support-btn">💚 Поддержать</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="pagination">
+      <button class="page-btn active">1</button>
+      <button class="page-btn">2</button>
+      <button class="page-btn">3</button>
+      <span class="page-dots">...</span>
+      <button class="page-btn">8</button>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    © Гершончик К.В., группа 22о — Атлас биоразнообразия
+  </footer>
+  <script src="../struct/script.js"></script>
+  <script src="../struct/leaves.js"></script>
+  <script>
+    // Фильтрация и поиск заповедников
+    document.addEventListener('DOMContentLoaded', function() {
+      const searchInput = document.getElementById('searchInput');
+      const regionFilter = document.getElementById('regionFilter');
+      const reserveCards = document.querySelectorAll('.reserve-card');
+      
+      function filterReserves() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const region = regionFilter.value;
+        
+        reserveCards.forEach(card => {
+          const title = card.querySelector('h3').textContent.toLowerCase();
+          const description = card.querySelector('p').textContent.toLowerCase();
+          const cardRegion = card.getAttribute('data-region');
+          
+          const matchesSearch = title.includes(searchTerm) || description.includes(searchTerm);
+          const matchesRegion = region === 'all' || cardRegion === region;
+          
+          if (matchesSearch && matchesRegion) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      }
+      
+      searchInput.addEventListener('input', filterReserves);
+      regionFilter.addEventListener('change', filterReserves);
+      
+      // Анимация появления карточек
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+      
+      const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, observerOptions);
+      
+      reserveCards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        observer.observe(card);
+      });
+    });
+  </script>
+
+</body>
+</html>

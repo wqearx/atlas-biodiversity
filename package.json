@@ -1,0 +1,29 @@
+{
+  "name": "atlasbio",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wqearx/atlas-biodiversity.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wqearx/atlas-biodiversity/issues"
+  },
+  "homepage": "https://github.com/wqearx/atlas-biodiversity#readme",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "nodemailer": "^7.0.9",
+    "sqlite3": "^5.1.7"
+  }
+}

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Регистрация и вход - Атлас биоразнообразия</title>
+  <link rel="stylesheet" href="../fonts/style.css">
+  <link rel="stylesheet" href="../fonts/login.css">
+</head>
+<body>
+   <!-- Фон с анимацией светлячков -->
+  <canvas id="fireflies-login"></canvas>
+  
+<header>
+  <div class="header-content">
+    <div class="header-left">
+      <img src="https://cdn-icons-png.flaticon.com/512/427/427735.png" alt="Лого" class="logo">
+      <div class="brand-name">Атлас биоразнообразия</div>
+      <a href="index.html" class="header-link">Главная</a>
+      <a href="reserves.html" class="header-link">Заповедники</a>
+    </div>
+
+    <div class="profile" id="profileMenu" style="display: none;">
+      <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Профиль" class="profile-icon" title="Профиль">
+      <span id="userName" class="profile-name"></span>
+      <button id="logoutBtn">Выйти</button>
+    </div>
+  </div>
+</header>
+
+
+<main>
+  <div class="form-container">
+    <!-- Регистрация -->
+    <form id="registerForm">
+      <h1>Регистрация</h1>
+      <label>Имя:</label>
+      <input type="text" id="regName" required placeholder="Введите ваше имя">
+
+      <label>Email:</label>
+      <input type="email" id="regEmail" required placeholder="example@mail.ru">
+
+      <label>Пароль:</label>
+      <input type="password" id="regPassword" required placeholder="Не менее 6 символов">
+
+      <div class="terms">
+        <input type="checkbox" id="termsCheck" required>
+        <label for="termsCheck">
+          Согласен с <a href="#" id="openTerms">условиями использования</a>
+        </label>
+      </div>
+
+
+      <button type="submit">Зарегистрироваться</button>
+      <p id="messageRegister" class="message"></p>
+    </form>
+
+    <!-- Вход -->
+    <form id="loginForm">
+      <h1>Вход</h1>
+      <label>Email:</label>
+      <input type="email" id="loginEmail" required placeholder="example@mail.ru">
+
+      <label>Пароль:</label>
+      <input type="password" id="loginPassword" required placeholder="Ваш пароль">
+
+      <button type="submit">Войти</button>
+      <p id="messageLogin" class="message"></p>
+    </form>
+  </div>
+
+   
+
+  <!-- Блок выбора заповедников -->
+   <!-- Блок выбора заповедников -->
+<div class="reserves-container" id="reservesContainer" style="display:none;">
+  <h2>🌿 Поддержка заповедников</h2>
+  <p class="intro-text">Выберите заповедники, которые хотите поддержать, и укажите сумму пожертвования</p>
+  
+  <!-- Добавьте этот div с классом scrollable-reserves -->
+  <div class="scrollable-reserves">
+    <div class="reserves-cards">
+      <!-- Российские заповедники -->
+      <div class="reserve-card" data-name="Байкальский заповедник">
+        <img src="https://images.unsplash.com/photo-1570481662006-a3a1374699e8?w=150&h=150&fit=crop" alt="Байкальский заповедник">
+        <h3>Байкальский заповедник</h3>
+        <p>Охраняет уникальную экосистему озера Байкал</p>
+        <div class="donation-buttons">
+          <button data-amount="100">100 ₽</button>
+          <button data-amount="300">300 ₽</button>
+          <button data-amount="500">500 ₽</button>
+          <button data-amount="1000">1000 ₽</button>
+        </div>
+      </div>
+      
+      <div class="reserve-card" data-name="Кроноцкий заповедник">
+        <img src="https://images.unsplash.com/photo-1559666126-84d0e0a5ebf6?w=150&h=150&fit=crop" alt="Кроноцкий заповедник">
+        <h3>Кроноцкий заповедник</h3>
+        <p>Дом вулканов и диких медведей Камчатки</p>
+        <div class="donation-buttons">
+          <button data-amount="100">100 ₽</button>
+          <button data-amount="300">300 ₽</button>
+          <button data-amount="500">500 ₽</button>
+          <button data-amount="1000">1000 ₽</button>
+        </div>
+      </div>
+      
+      <div class="reserve-card" data-name="Кавказский заповедник">
+        <img src="https://images.unsplash.com/photo-1518834107812-67d4c1b65d0a?w=150&h=150&fit=crop" alt="Кавказский заповедник">
+        <h3>Кавказский заповедник</h3>
+        <p>Объект Всемирного наследия ЮНЕСКО</p>
+        <div class="donation-buttons">
+          <button data-amount="100">100 ₽</button>
+          <button data-amount="300">300 ₽</button>
+          <button data-amount="500">500 ₽</button>
+          <button data-amount="1000">1000 ₽</button>
+        </div>
+      </div>
+      
+      <div class="reserve-card" data-name="Алтайский заповедник">
+        <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=150&h=150&fit=crop" alt="Алтайский заповедник">
+        <h3>Алтайский заповедник</h3>
+        <p>Сохранение уникальных природных комплексов</p>
+        <div class="donation-buttons">
+          <button data-amount="100">100 ₽</button>
+          <button data-amount="300">300 ₽</button>
+          <button data-amount="500">500 ₽</button>
+          <button data-amount="1000">1000 ₽</button>
+        </div>
+      </div>
+
+      <!-- Европейские заповедники -->
+      <div class="reserve-card" data-name="Швейцарский национальный парк">
+        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=150&h=150&fit=crop" alt="Швейцарский национальный парк">
+        <h3>Швейцарский национальный парк</h3>
+        <p>Первый национальный парк в Альпах</p>
+        <div class="donation-buttons">
+          <button data-amount="100">100 ₽</button>
+          <button data-amount="300">300 ₽</button>
+          <button data-amount="500">500 ₽</button>
+          <button data-amount="1000">1000 ₽</button>
+        </div>
+      </div>
+      
+      <div class="reserve-card" data-name="Беловежская пуща">
+        <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=150&h=150&fit=crop" alt="Беловежская пуща">
+        <h3>Беловежская пуща</h3>
+        <p>Один из последних реликтовых лесов</p>
+        <div class="donation-buttons">
+          <button data-amount="100">100 ₽</button>
+          <button data-amount="300">300 ₽</button>
+          <button data-amount="500">500 ₽</button>
+          <button data-amount="1000">1000 ₽</button>
+        </div>
+      </div>
+
+      <!-- Азиатские заповедники -->
+      <div class="reserve-card" data-name="Джигме-Дорджи">
+        <img src="https://images.unsplash.com/photo-1547981609-4b6bf67b1293?w=150&h=150&fit=crop" alt="Джигме-Дорджи">
+        <h3>Джигме-Дорджи</h3>
+        <p>Крупнейший национальный парк Бутана</p>
+        <div class="donation-buttons">
+          <button data-amount="100">100 ₽</button>
+          <button data-amount="300">300 ₽</button>
+          <button data-amount="500">500 ₽</button>
+          <button data-amount="1000">1000 ₽</button>
+        </div>
+      </div>
+      
+      <div class="reserve-card" data-name="Комитаке">
+        <img src="https://images.unsplash.com/photo-1521334884684-d80222895322?w=150&h=150&fit=crop" alt="Комитаке">
+        <h3>Комитаке</h3>
+        <p>Заповедник с вулканическими ландшафтами</p>
+        <div class="donation-buttons">
+          <button data-amount="100">100 ₽</button>
+          <button data-amount="300">300 ₽</button>
+          <button data-amount="500">500 ₽</button>
+          <button data-amount="1000">1000 ₽</button>
+        </div>
+      </div>
+
+      <!-- Африканские заповедники -->
+      <div class="reserve-card" data-name="Серенгети">
+        <img src="https://images.unsplash.com/photo-1516426122078-c23e76319801?w=150&h=150&fit=crop" alt="Серенгети">
+        <h3>Серенгети</h3>
+        <p>Знаменитый парк с миграцией животных</p>
+        <div class="donation-buttons">
+          <button data-amount="100">100 ₽</button>
+          <button data-amount="300">300 ₽</button>
+          <button data-amount="500">500 ₽</button>
+          <button data-amount="1000">1000 ₽</button>
+        </div>
+      </div>
+      
+      <div class="reserve-card" data-name="Крюгер">
+        <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=150&h=150&fit=crop" alt="Крюгер">
+        <h3>Крюгер</h3>
+        <p>Один из крупнейших заповедников в Южной Африке</p>
+        <div class="donation-buttons">
+          <button data-amount="100">100 ₽</button>
+          <button data-amount="300">300 ₽</button>
+          <button data-amount="500">500 ₽</button>
+          <button data-amount="1000">1000 ₽</button>
+        </div>
+      </div>
+
+      <!-- Американские заповедники -->
+      <div class="reserve-card" data-name="Йеллоустон">
+        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=150&h=150&fit=crop" alt="Йеллоустон">
+        <h3>Йеллоустон</h3>
+        <p>Первый национальный парк в мире</p>
+        <div class="donation-buttons">
+          <button data-amount="100">100 ₽</button>
+          <button data-amount="300">300 ₽</button>
+          <button data-amount="500">500 ₽</button>
+          <button data-amount="1000">1000 ₽</button>
+        </div>
+      </div>
+      
+      <div class="reserve-card" data-name="Банф">
+        <img src="https://images.unsplash.com/photo-1586015555758-d975927b2b1c?w=150&h=150&fit=crop" alt="Банф">
+        <h3>Банф</h3>
+        <p>Старейший национальный парк Канады</p>
+        <div class="donation-buttons">
+          <button data-amount="100">100 ₽</button>
+          <button data-amount="300">300 ₽</button>
+          <button data-amount="500">500 ₽</button>
+          <button data-amount="1000">1000 ₽</button>
+        </div>
+      </div>
+
+      <!-- Океания -->
+      <div class="reserve-card" data-name="Фьордленд">
+        <img src="https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?w=150&h=150&fit=crop" alt="Фьордленд">
+        <h3>Фьордленд</h3>
+        <p>Крупнейший национальный парк Новой Зеландии</p>
+        <div class="donation-buttons">
+          <button data-amount="100">100 ₽</button>
+          <button data-amount="300">300 ₽</button>
+          <button data-amount="500">500 ₽</button>
+          <button data-amount="1000">1000 ₽</button>
+        </div>
+      </div>
+      
+      <div class="reserve-card" data-name="Какаду">
+        <img src="https://images.unsplash.com/photo-1544551763-77efc0cac906?w=150&h=150&fit=crop" alt="Какаду">
+        <h3>Какаду</h3>
+        <p>Объект Всемирного наследия с уникальной природой</p>
+        <div class="donation-buttons">
+          <button data-amount="100">100 ₽</button>
+          <button data-amount="300">300 ₽</button>
+          <button data-amount="500">500 ₽</button>
+          <button data-amount="1000">1000 ₽</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="selected-reserves" id="selectedReserves" style="display: none;">
+    <h3>Выбранные заповедники:</h3>
+    <div id="selectedList"></div>
+  </div>
+  
+  <button id="saveReserves" class="save-btn">💚 Сохранить пожертвования</button>
+  <p id="reservesMessage" class="message"></p>
+</div>
+  <div class="reserves-container" id="reservesContainer" style="display:none;">
+    <h2>🌿 Поддержка заповедников</h2>
+    <p class="intro-text">Выберите заповедники, которые хотите поддержать, и укажите сумму пожертвования</p>
+    
+    <div class="reserves-cards">
+      <div class="reserve-card" data-name="Байкальский заповедник">
+        <img src="../images/baikalsky_zapovednik.jpg" alt="Байкальский заповедник">
+        <h3>Байкальский заповедник</h3>
+        <p>Охраняет уникальную экосистему озера Байкал</p>
+        <div class="donation-buttons">
+          <button data-amount="100">100 ₽</button>
+          <button data-amount="300">300 ₽</button>
+          <button data-amount="500">500 ₽</button>
+          <button data-amount="1000">1000 ₽</button>
+        </div>
+      </div>
+      
+      <div class="reserve-card" data-name="Кроноцкий заповедник">
+        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=150&h=150&fit=crop" alt="Кроноцкий заповедник">
+        <h3>Кроноцкий заповедник</h3>
+        <p>Дом вулканов и диких медведей Камчатки</p>
+        <div class="donation-buttons">
+          <button data-amount="100">100 ₽</button>
+          <button data-amount="300">300 ₽</button>
+          <button data-amount="500">500 ₽</button>
+          <button data-amount="1000">1000 ₽</button>
+        </div>
+      </div>
+      
+      <div class="reserve-card" data-name="Йеллоустонский парк">
+        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=150&h=150&fit=crop" alt="Йеллоустонский парк">
+        <h3>Йеллоустонский парк</h3>
+        <p>Первый национальный парк в мире</p>
+        <div class="donation-buttons">
+          <button data-amount="100">100 ₽</button>
+          <button data-amount="300">300 ₽</button>
+          <button data-amount="500">500 ₽</button>
+          <button data-amount="1000">1000 ₽</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="selected-reserves" id="selectedReserves" style="display: none;">
+      <h3>Выбранные заповедники:</h3>
+      <div id="selectedList"></div>
+    </div>
+    
+    <button id="saveReserves" class="save-btn">💚 Сохранить пожертвования</button>
+    <p id="reservesMessage" class="message"></p>
+  </div>
+
+  <!-- Блок с пожертвованиями -->
+  <div class="donations-container" id="donationsContainer" style="display:none;">
+    <h3>📋 История ваших не подтвержденных пожертвований</h3>
+    <div id="donationsList" class="donations-list">
+      <!-- Список будет заполняться динамически -->
+    </div>
+    <p id="noDonations" style="display: none; text-align: center; color: #ccc;">
+      У вас пока нет пожертвований
+    </p>
+  </div>
+</main>
+
+
+
+<script src="../struct/login.js"></script>
+<script src="../struct/login-particles.js"></script>
+
+
+<!-- Модальное окно с условиями -->
+<div id="termsModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Условия использования</h2>
+    <p>
+      Здесь можно разместить текст условий использования. 
+      Он может быть длинным и будет прокручиваться внутри модалки.
+    </p>
+  </div>
+</div>
+
+
+
+</body>
+</html>

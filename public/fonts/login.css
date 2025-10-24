@@ -11,18 +11,22 @@ body {
   overflow-y: auto; /* Разрешаем вертикальный скролл */
 }
 
+
 /* =================== Header =================== */
+/* =================== Header в стиле главной страницы =================== */
 header {
   width: 100%;
-  background: linear-gradient(90deg, #0a2a18, #0f3d27);
-  padding: 1rem 2rem;
+  background: rgba(5, 20, 10, 0.75);
+  backdrop-filter: blur(6px);
+  padding: 12px 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 15px rgba(138, 156, 147, 0.1);
   position: sticky;
   top: 0;
   z-index: 100;
+  border-bottom: 1px solid rgba(200, 201, 200, 0.3);
 }
 
 .header-content {
@@ -37,7 +41,7 @@ header {
 .header-left {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
+  gap: 12px;
   flex-shrink: 0;
 }
 
@@ -45,32 +49,75 @@ header {
   font-family: 'Cinzel', serif;
   font-weight: 600;
   font-size: 1.4rem;
-  color: #baffba;
-  text-shadow: 0 0 12px rgba(0,255,140,0.4);
+  color: #e9ffe9;
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px #e3ece7, 0 0 20px #87948d;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
   flex-shrink: 0;
 }
 
-header .logo {
-  height: 40px;
-  filter: drop-shadow(0 0 5px #5fff94) brightness(1.2);
-  transition: transform 0.3s ease;
-}
-header .logo:hover {
-  transform: scale(1.05) rotate(5deg);
+.brand-name:hover {
+  color: #dfebe2;
+  text-shadow: 0 0 15px #cddacd, 0 0 25px #7a8a80;
 }
 
-/* Ссылка «Главная» */
+/* Логотип с анимацией */
+header .logo {
+  width: 42px;
+  height: 42px;
+  filter: drop-shadow(0 0 8px #838683) brightness(1.2);
+  animation: treeGlow 4s ease-in-out infinite alternate;
+  transition: transform 0.3s ease;
+}
+
+@keyframes treeGlow {
+  0% {
+    filter: drop-shadow(0 0 5px #b1b8b3) brightness(1.1);
+    transform: scale(1);
+  }
+  100% {
+    filter: drop-shadow(0 0 18px #939e96) brightness(1.4);
+    transform: scale(1.05);
+  }
+}
+
+header .logo:hover {
+  transform: scale(1.1) rotate(5deg);
+}
+
+/* Ссылки навигации */
 .header-link {
-  color: #baffba;
+  color: #adbbad;
   font-weight: 600;
   text-decoration: none;
   margin-left: 1rem;
-  transition: color 0.3s ease, transform 0.2s ease;
+  font-size: 1rem;
+  font-family: "Open Sans", sans-serif;
+  transition: all 0.3s ease;
+  position: relative;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
 }
+
+.header-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: #c4cac4;
+  transition: width 0.3s ease;
+}
+
+.header-link:hover::after {
+  width: 100%;
+}
+
 .header-link:hover {
-  color: #64ffda;
-  transform: scale(1.05);
-  text-shadow: 0 0 8px #64ffda, 0 0 15px #baffba;
+  color: #c9d3c9;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
 }
 
 /* Профиль справа */
@@ -80,37 +127,91 @@ header .logo:hover {
   gap: 1rem;
   flex-shrink: 0;
 }
+
 .profile-icon {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  border: 2px solid #64ffda;
+  border: 2px solid rgba(100, 255, 218, 0.6);
   cursor: pointer;
   transition: transform 0.3s, box-shadow 0.3s;
+  background: rgba(255, 255, 255, 0.1);
 }
+
 .profile-icon:hover {
   transform: scale(1.1);
-  box-shadow: 0 0 10px #64ffda;
+  box-shadow: 0 0 15px rgba(100, 255, 218, 0.4);
+  border-color: #64ffda;
 }
 
 .profile-name {
   font-weight: bold;
   color: #baffba;
+  text-shadow: 0 0 8px rgba(100, 255, 218, 0.3);
 }
 
 .profile button {
-  padding: 0.4rem 1rem;
+  padding: 0.5rem 1.2rem;
   border: none;
   border-radius: 25px;
-  background: #00c853;
+  background: rgba(0, 200, 83, 0.8);
   color: #fff;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.3s ease;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
+
 .profile button:hover {
-  background: #64dd17;
+  background: rgba(100, 221, 23, 0.9);
   transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(100, 221, 23, 0.4);
+}
+
+/* Адаптив для хедера */
+@media (max-width: 800px) {
+  header {
+    padding: 12px 20px;
+  }
+  
+  .header-content {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .header-left {
+    order: 1;
+  }
+  
+  .profile {
+    order: 2;
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .header-link {
+    margin-left: 0.5rem;
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-name {
+    font-size: 1.2rem;
+  }
+  
+  header .logo {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .header-link {
+    font-size: 0.85rem;
+    margin-left: 0.3rem;
+    padding: 0.3rem 0.6rem;
+  }
 }
 
 /* =================== Main =================== */
@@ -598,4 +699,33 @@ ul, ol {
 .donations-container,
 .form-container {
   overflow: visible;
+}
+.donation-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.donation-buttons button {
+  background: #64ffda;
+  color: #022a14;
+  border-radius: 12px;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+  min-width: 80px; /* Минимальная ширина для всех кнопок */
+  text-align: center;
+}
+.save-btn {
+  width: 100%;           /* Растянуть на всю ширину контейнера */
+  max-width: 1000px;      /* Ограничить максимальную ширину, чтобы не было слишком широкой */
+  padding: 1rem 0;       /* Сделать вертикальные отступы больше для "воздушности" */
+  font-size: 1.2rem;     /* Немного увеличить шрифт */
+  margin: 1rem 0;        /* Добавить отступ сверху и снизу */
+  display: block;        /* Чтобы width:100% работал корректно */
 }

@@ -225,27 +225,62 @@ function initializeReserveCards() {
                 e.stopPropagation();
                 const amount = parseInt(btn.dataset.amount);
                 
-                // Обновляем или добавляем заповедник
+                // Находим существующий заповедник
                 const existingIndex = selectedReserves.findIndex(r => r.name === reserveName);
+                
                 if (existingIndex >= 0) {
-                    selectedReserves[existingIndex].amount = amount;
+                    // Если заповедник уже выбран - СУММИРУЕМ сумму
+                    selectedReserves[existingIndex].amount += amount;
                 } else {
-                    selectedReserves.push({ name: reserveName, amount });
+                    // Если заповедник новый - добавляем
+                    selectedReserves.push({ 
+                        name: reserveName, 
+                        amount: amount,
+                        originalAmount: amount // сохраняем оригинальную сумму для подсветки
+                    });
                 }
 
                 // Подсветка выбранной кнопки
-                buttons.querySelectorAll("button").forEach(b => {
-                    b.style.background = "#64ffda";
-                    b.style.color = "#000";
-                });
-                btn.style.background = "#00c853";
-                btn.style.color = "#fff";
-
+                updateButtonHighlight(buttons, selectedReserves[existingIndex >= 0 ? existingIndex : selectedReserves.length - 1]);
+                
                 // Обновляем список выбранных
                 updateSelectedReservesList();
             });
         });
+
+        // Восстанавливаем подсветку при загрузке страницы
+        restoreButtonHighlight(card, reserveName);
     });
+}
+
+// ==========================
+// Обновление подсветки кнопок
+// ==========================
+function updateButtonHighlight(buttons, reserve) {
+    buttons.querySelectorAll("button").forEach(b => {
+        const buttonAmount = parseInt(b.dataset.amount);
+        
+        if (buttonAmount === reserve.originalAmount) {
+            b.style.background = "#00c853";
+            b.style.color = "#fff";
+            b.style.transform = "scale(1.05)";
+        } else {
+            b.style.background = "#64ffda";
+            b.style.color = "#000";
+            b.style.transform = "scale(1)";
+        }
+    });
+}
+
+// ==========================
+// Восстановление подсветки кнопок при загрузке
+// ==========================
+function restoreButtonHighlight(card, reserveName) {
+    const existingReserve = selectedReserves.find(r => r.name === reserveName);
+    if (existingReserve) {
+        const buttons = card.querySelector(".donation-buttons");
+        updateButtonHighlight(buttons, existingReserve);
+    }
 }
 
 // ==========================
@@ -263,12 +298,21 @@ function updateSelectedReservesList() {
     selectedContainer.style.display = "block";
     selectedList.innerHTML = "";
     
-    selectedReserves.forEach((reserve, index) => {
+    // Группируем по названию заповедника для отображения
+    const groupedReserves = selectedReserves.reduce((acc, reserve) => {
+        if (!acc[reserve.name]) {
+            acc[reserve.name] = 0;
+        }
+        acc[reserve.name] += reserve.amount;
+        return acc;
+    }, {});
+    
+    Object.entries(groupedReserves).forEach(([name, totalAmount], index) => {
         const item = document.createElement("div");
         item.className = "selected-item";
         item.innerHTML = `
-            <span>${reserve.name} — ${reserve.amount} ₽</span>
-            <button class="remove-btn" data-index="${index}">×</button>
+            <span>${name} — ${totalAmount} ₽</span>
+            <button class="remove-btn" data-name="${name}">×</button>
         `;
         selectedList.appendChild(item);
     });
@@ -277,23 +321,54 @@ function updateSelectedReservesList() {
     document.querySelectorAll(".remove-btn").forEach(btn => {
         btn.addEventListener("click", (e) => {
             e.stopPropagation();
-            const index = parseInt(btn.dataset.index);
-            selectedReserves.splice(index, 1);
+            const reserveName = btn.dataset.name;
+            
+            // Удаляем все записи этого заповедника
+            selectedReserves = selectedReserves.filter(r => r.name !== reserveName);
             updateSelectedReservesList();
             
             // Сбрасываем подсветку кнопок в соответствующей карточке
-            const reserveName = selectedReserves[index]?.name;
-            if (reserveName) {
-                const card = document.querySelector(`[data-name="${reserveName}"]`);
-                if (card) {
-                    card.querySelectorAll('.donation-buttons button').forEach(b => {
-                        b.style.background = "#64ffda";
-                        b.style.color = "#000";
-                    });
-                }
+            const card = document.querySelector(`[data-name="${reserveName}"]`);
+            if (card) {
+                card.querySelectorAll('.donation-buttons button').forEach(b => {
+                    b.style.background = "#64ffda";
+                    b.style.color = "#000";
+                    b.style.transform = "scale(1)";
+                });
             }
         });
     });
+
+    // Показываем общую сумму
+    showTotalAmount();
+}
+
+// ==========================
+// Показать общую сумму пожертвований
+// ==========================
+function showTotalAmount() {
+    // Удаляем старый элемент если есть
+    const oldTotal = document.getElementById('totalAmount');
+    if (oldTotal) oldTotal.remove();
+    
+    const total = selectedReserves.reduce((sum, reserve) => sum + reserve.amount, 0);
+    
+    const totalElement = document.createElement("div");
+    totalElement.id = "totalAmount";
+    totalElement.innerHTML = `<strong>Общая сумма: ${total} ₽</strong>`;
+    totalElement.style.cssText = `
+        text-align: center;
+        font-size: 1.2rem;
+        color: #64ffda;
+        margin: 1rem 0;
+        padding: 0.5rem;
+        background: rgba(100, 255, 218, 0.1);
+        border-radius: 10px;
+        border: 1px solid #64ffda;
+    `;
+    
+    const selectedContainer = document.getElementById("selectedReserves");
+    selectedContainer.appendChild(totalElement);
 }
 
 // ==========================
@@ -309,10 +384,30 @@ async function handleSaveReserves() {
 
     try {
         const user = JSON.parse(localStorage.getItem("user"));
+        
+        // Группируем платежи по заповедникам перед отправкой
+        const groupedReserves = selectedReserves.reduce((acc, reserve) => {
+            if (!acc[reserve.name]) {
+                acc[reserve.name] = 0;
+            }
+            acc[reserve.name] += reserve.amount;
+            return acc;
+        }, {});
+
+        // Преобразуем обратно в массив для отправки
+        const reservesToSend = Object.entries(groupedReserves).map(([name, amount]) => ({
+            name,
+            amount
+        }));
+
         const response = await fetch("/save-reserves", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email: user.email, reserves: selectedReserves })
+            body: JSON.stringify({ 
+                email: user.email, 
+                reserves: reservesToSend,
+                totalAmount: reservesToSend.reduce((sum, r) => sum + r.amount, 0)
+            })
         });
 
         const result = await response.json();
@@ -321,12 +416,15 @@ async function handleSaveReserves() {
             showMessage(message, "✅ " + result.message, true);
             await loadUserDonations(user.email);
             
-
+            // Очищаем выбранные заповедники после успешного сохранения
+            selectedReserves = [];
+            updateSelectedReservesList();
             
-            // Сбрасываем подсветку кнопок
+            // Сбрасываем подсветку всех кнопок
             document.querySelectorAll('.donation-buttons button').forEach(btn => {
                 btn.style.background = "#64ffda";
                 btn.style.color = "#000";
+                btn.style.transform = "scale(1)";
             });
             
         } else {
@@ -368,11 +466,20 @@ function displayDonations(donations) {
     
     noDonations.style.display = "none";
     
-    donationsList.innerHTML = donations.map(donation => `
+    // Группируем донаты по заповедникам для отображения
+    const groupedDonations = donations.reduce((acc, donation) => {
+        if (!acc[donation.reserve_name]) {
+            acc[donation.reserve_name] = 0;
+        }
+        acc[donation.reserve_name] += donation.amount;
+        return acc;
+    }, {});
+    
+    donationsList.innerHTML = Object.entries(groupedDonations).map(([reserveName, totalAmount]) => `
         <div class="donation-item">
             <div class="donation-info">
-                <span class="reserve-name">${donation.reserve_name}</span>
-                <span class="donation-amount">${donation.amount} ₽</span>
+                <span class="reserve-name">${reserveName}</span>
+                <span class="donation-amount">${totalAmount} ₽</span>
             </div>
         </div>
     `).join('');
@@ -405,19 +512,38 @@ style.textContent = `
         from { transform: translateX(0); opacity: 1; }
         to { transform: translateX(100%); opacity: 0; }
     }
+    
+    .selected-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem;
+        margin: 0.3rem 0;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        border-left: 3px solid #64ffda;
+    }
+    
+    .remove-btn {
+        background: #ff5252;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        cursor: pointer;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .remove-btn:hover {
+        background: #ff0000;
+        transform: scale(1.1);
+    }
 `;
 document.head.appendChild(style);
-const li = document.createElement('li');
-li.classList.add('donation-item');
-li.textContent = `${li.reserveName} — ${li.amount} ₽`;
-li.style.opacity = '0'; // стартовое состояние для анимации
-donationsList.appendChild(li);
-
-// Чтобы анимация сработала после вставки
-setTimeout(() => {
-  li.style.opacity = '1';
-  li.style.animation = 'fadeUp 0.5s ease forwards';
-}, 10);
 
 // МОДАЛЬНОЕ ОКНО СОГЛАСЕН С УСЛОВИЯМИ ИСПОЛЬЗОВАНИЯ
 document.addEventListener("DOMContentLoaded", () => {
@@ -442,4 +568,3 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-

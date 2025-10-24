@@ -3,6 +3,12 @@
 /* Общие переменные страницы */
 :root {
   --accent: #90ee90;
+  --bg-dark: #072014;
+  --bg-medium: #0c3a22;
+  --bg-light: #144e2b;
+  --text-light: #eef9ef;
+  --text-muted: #d7f0d7;
+  --card-bg: rgba(255, 255, 255, 0.03);
 }
 
 /* Анимированный фон */
@@ -10,10 +16,17 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(120deg, #072014 0%, #0c3a22 50%, #144e2b 100%);
+  background: linear-gradient(120deg, var(--bg-dark) 0%, var(--bg-medium) 50%, var(--bg-light) 100%);
   animation: gradientShift 12s ease-in-out infinite;
 }
-/* =========================ЧАСТЬ АНИМАЦИИ С ИСПОЛЬЗОВАНИЕ JS=================== */
+
+/* Добавляем ключевые кадры для анимации фона */
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* =========================ЧАСТЬ АНИМАЦИИ С ИСПОЛЬЗОВАНИЕM JS=================== */
 
 /* Холст с листьями */
 #leaves {
@@ -23,6 +36,7 @@
   width: 100%;
   height: 100%;
   z-index: 0;
+  pointer-events: none; /* Чтобы не мешал взаимодействию с контентом */
 }
 
 /* Контент явно выше холста */
@@ -30,6 +44,7 @@
   position: relative;
   z-index: 2;
 }
+
 /* Основная компоновка */
 .leaves-bg {
   position: relative;
@@ -37,38 +52,41 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: linear-gradient(120deg, #072014 0%, #0c3a22 50%, #144e2b 100%);
+  background: linear-gradient(120deg, var(--bg-dark) 0%, var(--bg-medium) 50%, var(--bg-light) 100%);
   overflow: hidden;
+  min-height: 100vh;
 }
-
-
 
 .leaves-bg::before {
   content: "";
   position: absolute;
   inset: 0;
- 
   z-index: 0;
 }
-
 
 /* Контейнер с содержимым */
 .content {
   max-width: 980px;
-  margin: 100px auto;
+  margin: 100px auto 40px;
   padding: 36px;
-  background: rgba(255,255,255,0.02); 
+  background: rgba(255, 255, 255, 0.02);
   border-radius: 14px;
-  box-shadow: 0 6px 30px rgba(0,0,0,0.45);
-  color: #eef9ef;
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.45);
+  color: var(--text-light);
   font-family: "Open Sans", sans-serif;
   line-height: 1.6;
-  animation: contentEnter .6s ease;
+  animation: contentEnter 0.6s ease;
 }
 
 @keyframes contentEnter {
-  from { transform: translateY(8px); opacity: 0; }
-  to   { transform: translateY(0); opacity: 1; }
+  from { 
+    transform: translateY(8px); 
+    opacity: 0; 
+  }
+  to { 
+    transform: translateY(0); 
+    opacity: 1; 
+  }
 }
 
 .content h1 {
@@ -78,47 +96,51 @@
   text-align: center;
   text-shadow: 0 0 18px rgba(113, 133, 113, 0.25);
   animation: titleGlow 3s ease-in-out infinite alternate;
+  margin-bottom: 1rem;
 }
+
 @keyframes titleGlow {
-  0% { text-shadow: 0 0 8px rgba(144,255,144,0.2); }
-  100% { text-shadow: 0 0 24px rgba(144,255,144,0.5); }
+  0% { 
+    text-shadow: 0 0 8px rgba(144, 255, 144, 0.2); 
+  }
+  100% { 
+    text-shadow: 0 0 24px rgba(144, 255, 144, 0.5); 
+  }
 }
 
 .meta {
-  color: #d7f0d7;
+  color: var(--text-muted);
   margin-bottom: 18px;
+  text-align: center;
 }
 
 /* Карточки */
 .features {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 18px;
   margin-top: 24px;
+  position: relative;
+  z-index: 1;
 }
 
+/* Фон под карточками */
+.features::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(144, 255, 144, 0.08), transparent 70%);
+  z-index: 0;
+}
 
 .card {
-  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.06));
+  background: linear-gradient(180deg, var(--card-bg), rgba(0, 0, 0, 0.06));
   padding: 18px;
   border-radius: 12px;
-  border: 1px solid rgba(144,238,144,0.08);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
-  transform: translateY(15px);
-  opacity: 0;
-  animation: riseUp 0.8s ease forwards;
-}
-.card:nth-child(1) { animation-delay: 0.3s; }
-.card:nth-child(2) { animation-delay: 0.5s; }
-.card:nth-child(3) { animation-delay: 0.7s; }
-
-@keyframes riseUp { to { transform: translateY(0); opacity: 1; } }
-
-.card h3 { color: #aaffaa; margin-bottom: 10px; }
-.card li { margin-bottom: 6px; }
-
-/* 🌸 Анимация карточек */
-.card {
+  border: 1px solid rgba(144, 238, 144, 0.08);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  position: relative;
+  z-index: 1;
   opacity: 0;
   transform: translateY(20px);
   animation: fadeUp 0.8s ease forwards;
@@ -129,25 +151,27 @@
 .card:nth-child(3) { animation-delay: 0.6s; }
 
 @keyframes fadeUp {
-  to { opacity: 1; transform: translateY(0); }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
 }
 
-/* 🌊 Фон под карточками */
-.features {
-  position: relative;
-  z-index: 1;
+.card h3 { 
+  color: #aaffaa; 
+  margin-bottom: 10px; 
+  font-size: 1.3rem;
 }
 
-.features::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 50% 0%, rgba(144,255,144,0.08), transparent 70%);
-  z-index: 0;
+.card ul {
+  padding-left: 1.2rem;
 }
+
+.card li { 
+  margin-bottom: 6px; 
+}
+
 /* Кнопка */
-
-/* 🌿 Кнопка */
 .cta {
   display: block;
   width: fit-content;
@@ -158,30 +182,111 @@
   background: linear-gradient(90deg, #64e087, #46b76d);
   border: none;
   border-radius: 30px;
-  box-shadow: 0 8px 25px rgba(0,255,128,0.2);
+  box-shadow: 0 8px 25px rgba(0, 255, 128, 0.2);
   text-decoration: none;
   transition: all 0.3s ease;
-}
-.cta:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 35px rgba(0,255,128,0.35);
+  cursor: pointer;
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  font-size: 1rem;
 }
 
-/* Адаптив */
-@media (max-width:720px) {
-  .content { margin: 24px 12px; padding: 18px; }
+.cta:hover,
+.cta:focus {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 35px rgba(0, 255, 128, 0.35);
+  outline: none;
 }
+
+/* История */
+.story {
+  margin-top: 40px;
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 4px solid rgba(144, 255, 144, 0.3);
+  padding: 20px 26px;
+  border-radius: 12px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 1s ease 0.5s forwards;
+  opacity: 0;
+}
+
+.story h2 {
+  font-family: 'Cinzel', serif;
+  color: #aaffaa;
+  margin-bottom: 12px;
+  font-size: 1.8rem;
+}
+
+/* Футер */
 .site-footer {
   margin-top: auto;
   background: #0d1f0a;
   color: #b4b8b4;
   text-align: center;
-
+  padding: 20px;
   font-size: 0.95rem;
   border-top: 2px solid rgba(144, 238, 144, 0.3);
   box-shadow: 0 -2px 10px rgba(0, 255, 128, 0.1);
 }
-/* Меню */
+
+/* Шапка */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(10, 25, 15, 0.9);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 48px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  border-bottom: 1px solid rgba(156, 170, 156, 0.25);
+}
+
+/* Бренд/логотип */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand .logo {
+  width: 42px;
+  height: 42px;
+  filter: drop-shadow(0 0 8px #adbbad) brightness(1.2);
+  animation: treeGlow 4s ease-in-out infinite alternate;
+}
+
+@keyframes treeGlow {
+  0% {
+    filter: drop-shadow(0 0 5px #7d8881) brightness(1.1);
+    transform: scale(1);
+  }
+  100% {
+    filter: drop-shadow(0 0 18px #e0e2e1) brightness(1.4);
+    transform: scale(1.05);
+  }
+}
+
+.brand span {
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+  font-size: 1.4rem;
+  color: #e9ffe9;
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px #becfc5, 0 0 20px #4a524e;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.brand span:hover {
+  color: #b8ffcc;
+  text-shadow: 0 0 15px #d8d8d8, 0 0 25px #9b9b9b;
+}
+
+/* Навигация */
 .nav-links {
   display: flex;
   gap: 25px;
@@ -207,100 +312,82 @@
   transition: width 0.3s ease;
 }
 
-.nav-links a:hover::after {
+.nav-links a:hover::after,
+.nav-links a:focus::after {
   width: 100%;
 }
 
-.nav-links a:hover {
+.nav-links a:hover,
+.nav-links a:focus {
   color: #d4dfd4;
+  outline: none;
 }
 
 /* Отступ для контента (чтобы не прилипал под шапку) */
 body {
   padding-top: 70px;
-}
-/* 🌿 Анимация логотипа дерева */
-.brand .logo {
-  width: 42px;
-  height: 42px;
-  filter: drop-shadow(0 0 8px #adbbad) brightness(1.2);
-  animation: treeGlow 4s ease-in-out infinite alternate;
+  margin: 0;
 }
 
-@keyframes treeGlow {
-  0% {
-    filter: drop-shadow(0 0 5px #7d8881) brightness(1.1);
-    transform: scale(1);
-  }
-  100% {
-    filter: drop-shadow(0 0 18px #e0e2e1) brightness(1.4);
-    transform: scale(1.05);
-  }
-}
-
-/* 🎓 Название — более академичный и строгий стиль */
-.brand span {
-  font-family: 'Cinzel', serif;
-  font-weight: 600;
-  font-size: 1.4rem;
-  color: #e9ffe9;
-  letter-spacing: 1px;
-  text-shadow: 0 0 10px #becfc5, 0 0 20px #4a524e;
-  transition: color 0.3s ease, text-shadow 0.3s ease;
-}
-
-.brand span:hover {
-  color: #b8ffcc;
-  text-shadow: 0 0 15px #d8d8d8, 0 0 25px #9b9b9b;
-}
-
-.site-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: rgba(10, 25, 15, 0.9);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 48px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(6px);
-  z-index: 1000;
-  border-bottom: 1px solid rgba(156, 170, 156, 0.25);
-}
-
-
-/* 🪶 Контент */
-.content {
-  max-width: 980px;
-  margin: 0 auto 40px;
-  padding: 36px;
-  background: rgba(255,255,255,0.02);
-  border-radius: 14px;
-  box-shadow: 0 6px 30px rgba(0,0,0,0.45);
-  animation: fadeIn 1s ease;
-}
-
+/* Анимация появления */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-/* 🌱 История */
-.story {
-  margin-top: 40px;
-  background: rgba(255,255,255,0.03);
-  border-left: 4px solid rgba(144,255,144,0.3);
-  padding: 20px 26px;
-  border-radius: 12px;
-  box-shadow: 0 4px 25px rgba(0,0,0,0.3);
-  animation: fadeIn 1s ease 1s forwards;
+  from { 
+    opacity: 0; 
+    transform: translateY(15px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
 }
 
-.story h2 {
-  font-family: 'Cinzel', serif;
-  color: #aaffaa;
-  margin-bottom: 12px;
+/* Адаптивность */
+@media (max-width: 768px) {
+  .site-header {
+    padding: 14px 20px;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .content { 
+    margin: 80px 12px 24px; 
+    padding: 24px; 
+  }
+  
+  .content h1 {
+    font-size: 2rem;
+  }
+  
+  .features {
+    grid-template-columns: 1fr;
+  }
+  
+  .nav-links {
+    gap: 15px;
+  }
+  
+  body {
+    padding-top: 100px;
+  }
 }
 
-
+@media (max-width: 480px) {
+  .content { 
+    padding: 18px; 
+    margin: 70px 8px 20px;
+  }
+  
+  .content h1 {
+    font-size: 1.7rem;
+  }
+  
+  .brand span {
+    font-size: 1.2rem;
+  }
+  
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 15px;
+  }
+}

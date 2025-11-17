@@ -177,3 +177,37 @@ document.addEventListener("DOMContentLoaded", () => {
     if(e.target === modal) modal.style.display = 'none'; 
   });
 });
+// =================== ХЛЕБНЫЕ КРОШКИ ===================
+function initBreadcrumbs() {
+  const breadcrumbsContainer = document.getElementById('breadcrumbs');
+  if (!breadcrumbsContainer) return;
+
+  const currentPage = document.title.replace(' — Атлас биоразнообразия', '');
+  const path = window.location.pathname;
+  const pageName = getPageName(path);
+  
+  let breadcrumbsHTML = '<a href="../main/index.html">Главная</a>';
+  
+  if (pageName !== 'Главная') {
+    breadcrumbsHTML += ` <span>›</span> <span class="current">${pageName}</span>`;
+  }
+  
+  breadcrumbsContainer.innerHTML = breadcrumbsHTML;
+  document.body.classList.add('with-breadcrumbs');
+}
+
+function getPageName(path) {
+  const pageMap = {
+    'index.html': 'Главная',
+    'reserves.html': 'Заповедники',
+    'about.html': 'О проекте',
+    'contacts.html': 'Контакты',
+    'login.html': 'Вход/Регистрация'
+  };
+  
+  const fileName = path.split('/').pop();
+  return pageMap[fileName] || 'Главная';
+}
+
+// Инициализируем крошки при загрузке
+document.addEventListener('DOMContentLoaded', initBreadcrumbs);

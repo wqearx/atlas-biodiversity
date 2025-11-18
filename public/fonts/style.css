@@ -511,3 +511,150 @@ body {
     box-shadow: 0 0 8px #64ffda;
 }
 
+/* Стили для поиска */
+.search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.search-icon:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.search-box {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 300px;
+  background: rgba(10, 25, 15, 0.95);
+  border: 1px solid rgba(100, 255, 218, 0.3);
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  display: none;
+  z-index: 1000;
+}
+
+.search-box.active {
+  display: block;
+  animation: fadeInDown 0.3s ease;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#globalSearch {
+  width: 100%;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #e9ffe9;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+#globalSearch::placeholder {
+  color: #adbbad;
+}
+
+#globalSearch:focus {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
+}
+
+.search-results {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-top: 10px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.search-result-item {
+  padding: 10px 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-result-item:hover {
+  background: rgba(100, 255, 218, 0.1);
+  transform: translateX(5px);
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+.search-result-icon {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+.search-result-text {
+  flex: 1;
+}
+
+.search-result-title {
+  font-weight: bold;
+  color: #64ffda;
+  margin-bottom: 2px;
+}
+
+.search-result-description {
+  font-size: 0.8rem;
+  color: #adbbad;
+}
+
+.no-results {
+  padding: 15px;
+  text-align: center;
+  color: #adbbad;
+  font-style: italic;
+}
+
+/* Адаптивность для поиска */
+@media (max-width: 768px) {
+  .search-box {
+    width: 250px;
+    right: -50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-box {
+    width: 200px;
+    right: -80px;
+  }
+}
+
+mark {
+    background: rgba(100, 255, 218, 0.3);
+    color: #64ffda;
+    padding: 2px 4px;
+    border-radius: 3px;
+}

@@ -746,3 +746,67 @@ ul, ol {
     background: #64ffda;
     box-shadow: 0 0 8px #64ffda;
 }
+.terms-content {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 10px;
+  line-height: 1.6;
+  text-align: left;
+}
+
+.terms-content h3 {
+  color: #64ffda;
+  margin: 20px 0 10px 0;
+  font-size: 1.2rem;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.terms-content p {
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+.terms-content ul {
+  margin: 10px 0;
+  padding-left: 20px;
+}
+
+.terms-content li {
+  margin-bottom: 5px;
+}
+
+.terms-footer {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(100, 255, 218, 0.3);
+  text-align: center;
+}
+
+.terms-footer p {
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+/* Стили для скроллбара */
+.terms-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.terms-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.terms-content::-webkit-scrollbar-thumb {
+  background: #64ffda;
+  border-radius: 3px;
+}
+
+.terms-content a {
+  color: #64ffda;
+  text-decoration: none;
+}
+
+.terms-content a:hover {
+  text-decoration: underline;
+}

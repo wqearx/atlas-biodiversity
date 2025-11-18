@@ -568,3 +568,24 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+document.addEventListener("DOMContentLoaded", function() {
+    // Получаем имя текущего файла
+    const currentPage = window.location.pathname.split('/').pop();
+    console.log('Current page:', currentPage);
+    
+    const navLinks = document.querySelectorAll(".nav-links a");
+    
+    navLinks.forEach(link => {
+        link.classList.remove("active");
+        
+        // Получаем имя файла из href
+        const linkHref = link.getAttribute("href");
+        const linkPage = linkHref.split('/').pop();
+        console.log('Link page:', linkPage);
+        
+        // Сравниваем имена файлов
+        if (linkPage === currentPage) {
+            link.classList.add("active");
+        }
+    });
+});
